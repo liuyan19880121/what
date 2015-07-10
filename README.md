@@ -1,6 +1,8 @@
 ##proxy for git
+```
 set http_proxy="http://*.*.*.*:*"
 set https_proxy="http://*.*.*.*:*"
+```
 
 ##ssh
 ```
