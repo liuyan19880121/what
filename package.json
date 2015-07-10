@@ -1,0 +1,31 @@
+{
+  "version": "0.0.1",
+  "private": true,
+  "name": "BSS",
+  "description": "BSS",
+  "license": "MIT",
+  "dependencies": {
+    "koa": "^0.21.0",
+    "koa-ejs": "^2.0.1",
+    "koa-router": "^5.1.2",
+    "koa-static": "^1.4.9"
+  },
+  "devDependencies": {
+    "bower": "^1.3.12",
+    "gulp": "^3.8.8",
+    "gulp-clean": "^0.3.1",
+    "gulp-concat": "^2.5.2",
+    "gulp-html2js": "^0.2.0",
+    "gulp-rename": "^1.2.0",
+    "gulp-sequence": "^0.3.2",
+    "gulp-uglify": "^1.2.0",
+    "karma": "^0.12.16",
+    "karma-chrome-launcher": "^0.1.4",
+    "karma-jasmine": "~0.1.0",
+    "merge-stream": "^0.1.8"
+  },
+  "scripts": {
+    "postinstall": "bower install",
+    "start": "node --harmony app.js"
+  }
+}
