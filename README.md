@@ -29,6 +29,6 @@ git config --global user.name "liuyan19880121"
 git init
 git add *
 git commit -m "first commit"
-git remote add origin https://github.com/liuyan19880121/what.git
+git remote add origin git@github.com:liuyan19880121/what.git
 git push -u origin master
 ```
