@@ -1,2 +1,2 @@
-echo "aaaaaaaaaaaaaaaaaaaa"
-echo %1 %2
+echo "aaaaaaaaaaaaaaaaaaaa" >>test.log
+echo %1 %2 >> test.log
