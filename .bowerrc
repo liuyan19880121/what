@@ -1,6 +1,0 @@
-{
-    "directory": "build/bower_components",
-    "interactive": false,
-    "proxy":"http://10.204.186.175:9990",
-    "https-proxy":"http://10.204.186.175:9990"
-}
