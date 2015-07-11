@@ -2,6 +2,14 @@
 ```
 set http_proxy="http://*.*.*.*:*"
 set https_proxy="http://*.*.*.*:*"
+
+git config --global https.proxy "http://*.*.*.*:*"
+git config --global http.proxy "http://*.*.*.*:*"
+
+git config --global --get https.proxy
+git config --global --get http.proxy
+git config --global --unset https.proxy
+git config --global --unset http.proxy
 ```
 
 ##ssh
@@ -33,10 +41,3 @@ git remote add origin git@github.com:liuyan19880121/what.git
 git push -u origin master
 
 ```
-git config core.gitproxy '"aaaa" for github.com'
-git config core.gitproxy "aaaa for github.com"
-set GIT_PROXY_COMMAND="F:\work\koa\what\gitproxy.bat"
-
-git ls-remote --tags --heads git://github.com/twbs/bootstrap.git
-
-git ls-remote --tags --heads https://github.com/twbs/bootstrap.git
