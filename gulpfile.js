@@ -31,7 +31,10 @@ gulp.task('app', function() {
   return gulp.src([
     'src/static/js/app.js',
     'src/static/js/router.js',
-    'src/static/js/controllers.js'
+    'src/static/js/controllers.js',
+    'src/static/js/directives.js',
+    'src/static/js/filters.js',
+    'src/static/js/services.js'
     ])
     .pipe(concat('app.js'))
     //.pipe(uglify())
@@ -50,4 +53,10 @@ gulp.task('tpl', function() {
     .pipe(gulp.dest(jspath))
 });
 
-gulp.task('default', sequence('html', 'lib', 'app', 'tpl'));
+gulp.task('css', function () {
+  return gulp.src('src/static/css/*.css')
+    .pipe(concat('app.css'))
+    .pipe(gulp.dest(csspath));
+});
+
+gulp.task('default', sequence('html', 'lib', 'app', 'tpl', 'css'));

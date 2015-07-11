@@ -1,0 +1,22 @@
+.edit-container {
+  position: relative;
+  width: 800px;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.topic-title {
+  position: relative;
+  padding: 10px;
+  word-wrap: break-word;
+}
+
+.topic-title-input {
+  padding: 6px 10px;
+  font-size: 16px;
+  background-color: #fafafa;
+  width: 100%;
+}
