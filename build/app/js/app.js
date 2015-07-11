@@ -21,9 +21,12 @@ app
 }])
 .controller('topicEditorCtrl', ['$scope', '$routeParams', 'topic',
   function($scope, $routeParams, topic) {
-    topic.getList(function(err, data){
-        //$scope.topicList = data;
-    })
+    $scope.topic={title: '', content: ''}
+    $scope.marked = function(){
+        if(!$scope.editSelect) return;
+        $scope.editSelect=false;
+        console.log('~~~~~~~~~~~~');
+    }
 }])
 'use strict';
 'use strict';

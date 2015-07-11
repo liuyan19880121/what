@@ -54,16 +54,17 @@ module.run(["$templateCache", function($templateCache) {
     "                <div class=\"topic-area\">\n" +
     "                    <input type=\"text\" class=\"topic-title-input\" placeholder=\"标题\" />\n" +
     "                </div>\n" +
-    "                <div class=\"topic-content-container\">\n" +
+    "                <div class=\"topic-content-container\" ng-init=\"editSelect=true\">\n" +
     "                    <div class=\"topic-tab-area tabnav\">\n" +
     "                        <nav class=\"tabnav-tabs\">\n" +
-    "                            <a href=\"#\" class=\"tabnav-tab selected\">编辑</a>\n" +
-    "                            <a href=\"#\" class=\"tabnav-tab\">预览</a>\n" +
+    "                            <a href=\"#\" ng-class=\"['tabnav-tab', {selected: editSelect}]\" ng-click=\"editSelect=true\">编辑</a>\n" +
+    "                            <a href=\"#\" ng-class=\"['tabnav-tab', {selected: !editSelect}]\" ng-click=\"marked()\">预览</a>\n" +
     "                        </nav>\n" +
     "                    </div>\n" +
-    "                    <div class=\"topic-area\">\n" +
-    "                        <textarea class=\"topic-title-input content-textarea\" placeholder=\"内容\"></textarea>\n" +
+    "                    <div ng-class=\"['topic-area',{hidden:!editSelect}]\">\n" +
+    "                        <textarea class=\"topic-title-input content-textarea\" placeholder=\"内容\" ng-model=\"topic.content\"></textarea>\n" +
     "                    </div>\n" +
+    "                    <div ng-class=\"['topic-area',{hidden:editSelect}]\">dfdfsfd</div>\n" +
     "                    <div class=\"form-actions\">\n" +
     "                        <button type=\"submit\" class=\"btn btn-primary\">提交</button>\n" +
     "                    </div>\n" +
