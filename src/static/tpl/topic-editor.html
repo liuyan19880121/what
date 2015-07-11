@@ -1,10 +1,26 @@
 <div>
     <div ng-include="'header.html'"></div>
     <div id="main">
-        <div class="edit-container">
-            <div class="topic-title">
-                <input type="text" class="topic-title-input">
+        <form accept-charset="UTF-8" action="/api/topic/add">
+            <div class="edit-container">
+                <div class="topic-area">
+                    <input type="text" class="topic-title-input" placeholder="标题" />
+                </div>
+                <div class="topic-content-container">
+                    <div class="topic-tab-area tabnav">
+                        <nav class="tabnav-tabs">
+                            <a href="#" class="tabnav-tab selected">编辑</a>
+                            <a href="#" class="tabnav-tab">预览</a>
+                        </nav>
+                    </div>
+                    <div class="topic-area">
+                        <textarea class="topic-title-input content-textarea" placeholder="内容"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">提交</button>
+                    </div>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
