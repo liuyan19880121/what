@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('App', ['ngRoute', 'ngTemplate']);
+var app = angular.module('App', ['ngRoute', 'ngTemplate', 'ngSanitize']);
 'use strict';
 app.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
@@ -19,16 +19,52 @@ app
         $scope.topicList = data;
     })
 }])
-.controller('topicEditorCtrl', ['$scope', '$routeParams', 'topic',
-  function($scope, $routeParams, topic) {
-    $scope.topic={title: '', content: ''}
-    $scope.marked = function(){
+.controller('topicEditorCtrl', ['$scope', '$routeParams', 'topic', 'markdown',
+  function($scope, $routeParams, topic, markdown) {
+    
+    $scope.topic={title: '', content: '<p>hi</p>'}
+    $scope.preview = function(){
         if(!$scope.editSelect) return;
         $scope.editSelect=false;
-        console.log('~~~~~~~~~~~~');
+        //$scope.htmlContent = marked($scope.topic.content);
+        markdown.update($scope.topic.content);
     }
 }])
+
+
 'use strict';
+app.directive('markedown', ['markdown', function(markdown) {
+	var renderer = new marked.Renderer();
+
+	marked.setOptions({
+		renderer: renderer,
+		gfm: true,
+		tables: true,
+		breaks: true,
+		pedantic: false,
+		sanitize: false,
+		smartLists: true,
+		highlight: function(code) {
+			return hljs.highlightAuto(code).value;
+		}
+	});
+	return {
+		scope: {
+			mdContent: '='
+		},
+		restrict: 'EA',
+		replace: true,
+		transclude: true,
+		template: '<div ng-bind-html="htmlContent" class="markdown-body"></div>',
+		link: function(scope, element, attr) {
+			// var content = scope.$eval(attr.mdContent);
+			// console.log(content);
+			markdown.register(function() {
+				scope.htmlContent = marked(scope.mdContent);
+			});
+		}
+	}
+}])
 'use strict';
 'use strict';
 
@@ -46,3 +82,13 @@ app
         return {getList: getList};
     }
 ])
+.factory('markdown', function(){
+    var serv = {}, action=function(){};
+    serv.update = function(content) {
+        action(content);
+    }
+    serv.register = function(cb) {
+        action = cb
+    }
+    return serv;
+})

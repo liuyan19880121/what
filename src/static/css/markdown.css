@@ -1,0 +1,63 @@
+.markdown-body {
+  overflow: visible;
+  font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  word-wrap: break-word;
+  padding: 5px 5px 15px;
+  border-bottom: 1px solid #eee;
+  background-color: transparent;
+}
+
+blockquote {
+  margin: 0;
+}
+
+.markdown-body blockquote {
+  padding: 0 15px;
+  color: #777;
+  border-left: 4px solid #ddd;
+}
+
+.markdown-body blockquote>:last-child {
+  margin-bottom: 0;
+}
+
+.markdown-body blockquote>:first-child {
+  margin-top: 0;
+}
+
+.markdown-body a {
+  color: #4078c0;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.markdown-body a:hover, .markdown-body a:active {
+  text-decoration: underline;
+  outline: 0;
+}
+
+.markdown-body pre {
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+.markdown-body code {
+  padding: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  margin: 0;
+  font-size: 85%;
+  background-color: #f7f7f7;
+  border-radius: 3px;
+}
+
+code  {
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-size: 12px;
+}
