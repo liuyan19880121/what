@@ -1,7 +1,7 @@
 <div>
     <div ng-include="'header.html'"></div>
     <div id="main">
-        <form accept-charset="UTF-8" action="/api/topic/add">
+        <form accept-charset="UTF-8" action="/api/topic/new" method="post">
             <div class="edit-container">
                 <div class="topic-area">
                     <input type="text" class="topic-title-input" placeholder="标题" ng-model="topic.title"/>
@@ -17,8 +17,7 @@
                         <textarea class="topic-title-input content-textarea" placeholder="内容" ng-model="topic.content"></textarea>
                     </div>
                     <div ng-class="['topic-area',{hidden:editSelect}]">
-                        <!-- <div ng-bind-html="htmlContent" class="markdown-body"></div> -->
-                        <markedown md-content="topic.content"></markedown>
+                        <markedown></markedown>
                     </div>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary" ng-disabled="!topic.title || !topic.content">提交</button>

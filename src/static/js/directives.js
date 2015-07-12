@@ -1,5 +1,5 @@
 'use strict';
-app.directive('markedown', ['markdown', function(markdown) {
+app.directive('markedown', function() {
 	var renderer = new marked.Renderer();
 
 	marked.setOptions({
@@ -15,19 +15,15 @@ app.directive('markedown', ['markdown', function(markdown) {
 		}
 	});
 	return {
-		scope: {
-			mdContent: '='
-		},
+		scope: true,
 		restrict: 'EA',
 		replace: true,
 		transclude: true,
 		template: '<div ng-bind-html="htmlContent" class="markdown-body"></div>',
 		link: function(scope, element, attr) {
-			// var content = scope.$eval(attr.mdContent);
-			// console.log(content);
-			markdown.register(function() {
-				scope.htmlContent = marked(scope.mdContent);
-			});
+			scope.$parent.$on('markdown', function(e, content) {
+				scope.htmlContent = marked(content);
+			})
 		}
 	}
-}])
+})

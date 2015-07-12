@@ -14,13 +14,3 @@ app
         return {getList: getList};
     }
 ])
-.factory('markdown', function(){
-    var serv = {}, action=function(){};
-    serv.update = function(content) {
-        action(content);
-    }
-    serv.register = function(cb) {
-        action = cb
-    }
-    return serv;
-})

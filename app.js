@@ -3,6 +3,7 @@ var serve = require('koa-static');
 var router = require('koa-router')();
 var render = require('koa-ejs');
 var path = require('path');
+var apiRouter = require('./src/router/api_router.js');
 
 var app = koa();
 app.use(serve(__dirname + '/build/app'));
@@ -15,8 +16,10 @@ render(app, {
   debug: true
 });
 
+apiRouter(app);
+
 router.get('/*', function *(){yield this.render('index')})
-//router.get('/index', function *(){yield this.render('index')})
+
 app.use(router.middleware());
 
 app.listen(3000);

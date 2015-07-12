@@ -5,8 +5,8 @@ app.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
     $routeProvider
       .when('/', { templateUrl: 'index.html', controller: 'indexCtrl' })
+      .when('/topic/new', { templateUrl: 'topic-editor.html', controller: 'topicEditorCtrl' })
       .when('/topic/:id', { templateUrl: 'index.html', controller: 'indexCtrl' })
-      .when('/add', { templateUrl: 'topic-editor.html', controller: 'topicEditorCtrl' })
       .otherwise({redirectTo: '/'});
       $locationProvider.html5Mode({enabled: true, requireBase: false});
 }]);
@@ -19,21 +19,19 @@ app
         $scope.topicList = data;
     })
 }])
-.controller('topicEditorCtrl', ['$scope', '$routeParams', 'topic', 'markdown',
-  function($scope, $routeParams, topic, markdown) {
-    
-    $scope.topic={title: '', content: '<p>hi</p>'}
+.controller('topicEditorCtrl', ['$scope', '$routeParams', 'topic', 
+  function($scope, $routeParams, topic) {
+    $scope.topic={title: '', content: ''}
     $scope.preview = function(){
         if(!$scope.editSelect) return;
         $scope.editSelect=false;
-        //$scope.htmlContent = marked($scope.topic.content);
-        markdown.update($scope.topic.content);
+        $scope.$emit('markdown', $scope.topic.content)
     }
 }])
 
 
 'use strict';
-app.directive('markedown', ['markdown', function(markdown) {
+app.directive('markedown', function() {
 	var renderer = new marked.Renderer();
 
 	marked.setOptions({
@@ -49,22 +47,18 @@ app.directive('markedown', ['markdown', function(markdown) {
 		}
 	});
 	return {
-		scope: {
-			mdContent: '='
-		},
+		scope: true,
 		restrict: 'EA',
 		replace: true,
 		transclude: true,
 		template: '<div ng-bind-html="htmlContent" class="markdown-body"></div>',
 		link: function(scope, element, attr) {
-			// var content = scope.$eval(attr.mdContent);
-			// console.log(content);
-			markdown.register(function() {
-				scope.htmlContent = marked(scope.mdContent);
-			});
+			scope.$parent.$on('markdown', function(e, content) {
+				scope.htmlContent = marked(content);
+			})
 		}
 	}
-}])
+})
 'use strict';
 'use strict';
 
@@ -82,13 +76,3 @@ app
         return {getList: getList};
     }
 ])
-.factory('markdown', function(){
-    var serv = {}, action=function(){};
-    serv.update = function(content) {
-        action(content);
-    }
-    serv.register = function(cb) {
-        action = cb
-    }
-    return serv;
-})

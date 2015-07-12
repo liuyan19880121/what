@@ -49,7 +49,7 @@ module.run(["$templateCache", function($templateCache) {
     "<div>\n" +
     "    <div ng-include=\"'header.html'\"></div>\n" +
     "    <div id=\"main\">\n" +
-    "        <form accept-charset=\"UTF-8\" action=\"/api/topic/add\">\n" +
+    "        <form accept-charset=\"UTF-8\" action=\"/api/topic/new\" method=\"post\">\n" +
     "            <div class=\"edit-container\">\n" +
     "                <div class=\"topic-area\">\n" +
     "                    <input type=\"text\" class=\"topic-title-input\" placeholder=\"标题\" ng-model=\"topic.title\"/>\n" +
@@ -65,8 +65,7 @@ module.run(["$templateCache", function($templateCache) {
     "                        <textarea class=\"topic-title-input content-textarea\" placeholder=\"内容\" ng-model=\"topic.content\"></textarea>\n" +
     "                    </div>\n" +
     "                    <div ng-class=\"['topic-area',{hidden:editSelect}]\">\n" +
-    "                        <!-- <div ng-bind-html=\"htmlContent\" class=\"markdown-body\"></div> -->\n" +
-    "                        <markedown md-content=\"topic.content\"></markedown>\n" +
+    "                        <markedown></markedown>\n" +
     "                    </div>\n" +
     "                    <div class=\"form-actions\">\n" +
     "                        <button type=\"submit\" class=\"btn btn-primary\" ng-disabled=\"!topic.title || !topic.content\">提交</button>\n" +

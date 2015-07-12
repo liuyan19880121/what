@@ -7,15 +7,13 @@ app
         $scope.topicList = data;
     })
 }])
-.controller('topicEditorCtrl', ['$scope', '$routeParams', 'topic', 'markdown',
-  function($scope, $routeParams, topic, markdown) {
-    
-    $scope.topic={title: '', content: '<p>hi</p>'}
+.controller('topicEditorCtrl', ['$scope', '$routeParams', 'topic', 
+  function($scope, $routeParams, topic) {
+    $scope.topic={title: '', content: ''}
     $scope.preview = function(){
         if(!$scope.editSelect) return;
         $scope.editSelect=false;
-        //$scope.htmlContent = marked($scope.topic.content);
-        markdown.update($scope.topic.content);
+        $scope.$emit('markdown', $scope.topic.content)
     }
 }])
 

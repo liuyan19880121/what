@@ -175,6 +175,7 @@ input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
   padding: 5px 5px 15px;
   border-bottom: 1px solid #eee;
   background-color: transparent;
+  min-height: 300px;
 }
 
 blockquote {
