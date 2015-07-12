@@ -1,14 +1,26 @@
-<div class="content-container">
-    <div class="table-list-header">
-        <p>head</p>
-    </div>
-    <ul class="table-list">
-        <li class="table-list-item" ng-repeat="topic in topicList">
-            <div class="table-list-cell">
-                <a ng-href="{{'/topic/'+topic._id}}" class="title-link"> 
-                    {{topic.title}}
-                </a>
+<div id="main">
+        <form accept-charset="UTF-8">
+            <div class="edit-container">
+                <div class="topic-area">
+                    <input type="text" class="topic-title-input" placeholder="标题" ng-model="topic.title"/>
+                </div>
+                <div class="topic-content-container" ng-init="editSelect=true">
+                    <div class="topic-tab-area tabnav">
+                        <nav class="tabnav-tabs">
+                            <a href="" ng-class="['tabnav-tab', {selected: editSelect}]" ng-click="editSelect=true">编辑</a>
+                            <a href="" ng-class="['tabnav-tab', {selected: !editSelect}]" ng-click="preview()">预览</a>
+                        </nav>
+                    </div>
+                    <div ng-class="['topic-area',{hidden:!editSelect}]">
+                        <textarea class="topic-title-input content-textarea" placeholder="内容" ng-model="topic.content"></textarea>
+                    </div>
+                    <div ng-class="['topic-area',{hidden:editSelect}]">
+                        <markdown></markdown>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" ng-click="commit()" ng-disabled="!topic.title || !topic.content">提交</button>
+                    </div>
+                </div>
             </div>
-        </li>
-    </ul>
-</div>
+        </form>
+    </div>

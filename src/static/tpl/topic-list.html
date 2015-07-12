@@ -1,0 +1,14 @@
+<div class="content-container">
+    <div class="table-list-header">
+        <p>head</p>
+    </div>
+    <ul class="table-list">
+        <li class="table-list-item" ng-repeat="topic in topicList">
+            <div class="table-list-cell">
+                <a ng-href="{{'/topic/'+topic._id}}" class="title-link"> 
+                    {{topic.title}}
+                </a>
+            </div>
+        </li>
+    </ul>
+</div>

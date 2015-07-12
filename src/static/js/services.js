@@ -1,16 +1,23 @@
 'use strict';
 
 app
-.factory('topic', ['$http',
-    function ($http) {
-        var getList = function(cb) {
-            return cb(null, [
-                {_id: '342424', title: 'How to use a streaming JSON parser with Koa?'},
-                {_id: '342425', title: 'Add a silent option'},
-                {_id: '342425', title: 'adding support for specifying headers in ctx.onerror'},
-                {_id: '342425', title: 'es7 async function feedback'},
-            ])
+.factory('api', ['$resource', 
+  function($resource) {
+      return {
+          topic: $resource('/api/topic/:code')
+      }
+  }
+])
+.factory('topic', ['api',
+    function (api) {
+        var list = function () {
+            return api.topic.get({code: 'list'}).$promise;
+        },  add = function(data) {
+            return api.topic.save({code: 'add'}, data).$promise;
+        },  find = function(id) {
+            return api.topic.get({code: 'find'}, {id: id}).$promise;
         }
-        return {getList: getList};
+
+        return {list: list, add: add, find: find};
     }
 ])

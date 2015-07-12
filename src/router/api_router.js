@@ -1,10 +1,11 @@
 var router = require('koa-router')();
+var topicCtl = require('../controllers/topic');
 
 module.exports = function(app){
-    console.log('hi');
     app.use(router.middleware());
 };
 
-router.post('/api/topic/new', function *(next){
-    console.log('here');
-});
+
+router.get('/api/topic/list', topicCtl.list);
+router.post('/api/topic/add', topicCtl.addTopic);
+router.get('/api/topic/find', topicCtl.find);

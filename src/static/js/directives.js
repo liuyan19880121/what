@@ -1,5 +1,5 @@
 'use strict';
-app.directive('markedown', function() {
+app.directive('markdown', function() {
 	var renderer = new marked.Renderer();
 
 	marked.setOptions({
@@ -21,8 +21,11 @@ app.directive('markedown', function() {
 		transclude: true,
 		template: '<div ng-bind-html="htmlContent" class="markdown-body"></div>',
 		link: function(scope, element, attr) {
+			var oldContent = "";
 			scope.$parent.$on('markdown', function(e, content) {
+				if(oldContent == content) return;
 				scope.htmlContent = marked(content);
+				oldContent = content;
 			})
 		}
 	}
