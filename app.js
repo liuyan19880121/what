@@ -2,6 +2,7 @@ var koa = require('koa');
 var serve = require('koa-static');
 var router = require('koa-router')();
 var render = require('koa-ejs');
+var koaBody   = require('koa-body');
 var path = require('path');
 var apiRouter = require('./src/router/api_router.js');
 
@@ -15,6 +16,8 @@ render(app, {
   cache: false,
   debug: true
 });
+
+app.use(koaBody({strict: false}));
 
 apiRouter(app);
 

@@ -114,9 +114,9 @@ app
         },  add = function(data) {
             return api.topic.save({code: 'add'}, data).$promise;
         },  find = function(id) {
-            return api.topic.get({code: 'find'}, {id: id}).$promise;
+            return api.topic.get({code: 'find', id: id}).$promise;
         },  update = function(data) {
-            return api.topic.save({code: 'update'}, {data: data}).$promise;
+            return api.topic.save({code: 'update'}, data).$promise;
         }
 
         return {list: list, add: add, find: find, update: update};

@@ -7,6 +7,6 @@ module.exports = function(app){
 
 
 router.get('/api/topic/list', topicCtl.list);
-router.post('/api/topic/add', topicCtl.addTopic);
+router.post('/api/topic/add', topicCtl.add);
 router.get('/api/topic/find', topicCtl.find);
 router.post('/api/topic/update', topicCtl.update);
