@@ -10,7 +10,7 @@
                     <div class="topic-tab-area tabnav">
                         <nav class="tabnav-tabs">
                             <a href="" ng-class="['tabnav-tab', {selected: editSelect}]" ng-click="editSelect=true">编辑</a>
-                            <a href="" ng-class="['tabnav-tab', {selected: !editSelect}]" ng-click="preview()">预览</a>
+                            <a href="" ng-class="['tabnav-tab', {selected: !editSelect}]" ng-click="preview(editSelect);editSelect=false">预览</a>
                         </nav>
                     </div>
                     <div ng-class="['topic-area',{hidden:!editSelect}]">

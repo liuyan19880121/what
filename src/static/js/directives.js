@@ -22,7 +22,7 @@ app.directive('markdown', function() {
 		template: '<div ng-bind-html="htmlContent" class="markdown-body"></div>',
 		link: function(scope, element, attr) {
 			var oldContent = "";
-			scope.$parent.$on('markdown', function(e, content) {
+			scope.$on('markdown', function(e, content) {
 				if(oldContent == content) return;
 				scope.htmlContent = marked(content);
 				oldContent = content;
