@@ -36,8 +36,8 @@ app
     }
   }
 ])
-.controller('topicEditorCtrl', ['$scope', '$routeParams', 'topic',
-  function($scope, $routeParams, topic) {
+.controller('topicEditorCtrl', ['$scope', '$routeParams', '$location','topic',
+  function($scope, $routeParams, $location, topic) {
     var topicID = $routeParams.id;
     var isEdit = false;
     $scope.topic = {}
@@ -55,10 +55,12 @@ app
       if(!isEdit) {
         topic.add($scope.topic).then(function(res){
           console.log(res);
+          $location.path('/topic/' + res.data._id);
         }, console.log);
       } else {
         topic.update($scope.topic).then(function(res){
           console.log(res);
+          $location.path('/topic/' + topicID);
         }, console.log);
       }
     }

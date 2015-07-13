@@ -19,7 +19,8 @@ exports.add = function *(next) {
 	var content = this.request.body.content;
 	//var authorId 
 	var result = yield topic.add(title, content);
-	this.body = result;
+	this.body = {code: 0, data: {_id: result[0]._id, title: result[0].title}};
+	console.log(this.body);
 }
 
 exports.find = function *(next) {
