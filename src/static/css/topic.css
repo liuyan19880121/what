@@ -1,0 +1,29 @@
+.topic-content-wrapper {
+  position: relative;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  padding: 10px;
+}
+
+.topic-title-wrapper {
+	min-height: 42px;
+	border-bottom: 1px solid #eee;
+}
+
+.topic-title-show {
+	line-height: 1.1;
+}
+
+.topic-edit-action {
+	margin-top: 3px;
+}
+
+.topic-extra_info {
+	font-size: 12px;
+	line-height: 20px;
+	color: #767676;
+	margin-top: 5px;
+}

@@ -20,14 +20,14 @@
   word-wrap: break-word;
 }
 
-input.topic-title-input, .topic-title-input {
+input.topic-text-input, .topic-text-input {
   padding: 6px 10px;
   font-size: 16px;
   background-color: #fafafa;
   width: 100%;
 }
 
-.topic-title-input:focus {
+.topic-text-input:focus {
   background-color: #fff;
 }
 
@@ -66,12 +66,9 @@ input.topic-title-input, .topic-title-input {
   border-radius: 3px 3px 0 0;
 }
 
-.form-actions .btn {
-  float: right;
-}
-
 .form-actions {
-  padding: 0 10px 10px;
+  padding: 10px;
+  border-top: 1px solid #eee;
 }
 
 .form-actions:before {
