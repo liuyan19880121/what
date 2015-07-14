@@ -30,6 +30,7 @@ app
     $scope.topic = {}
     if(topicID) {
       topic.find(topicID).then(function(res){
+        console.log(res);
         $scope.topic = res.data;
         $scope.$broadcast('markdown', res.data.content);
       }, console.log);

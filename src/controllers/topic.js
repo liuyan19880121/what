@@ -1,5 +1,6 @@
 var proxy = require('../proxy_thunkify');
 var topic = proxy.topic;
+var _ = require('lodash')
 var querystring = require('querystring');
 
 
@@ -9,8 +10,11 @@ exports.list = function *(next) {
 	var query = {deleted: false};
 	var options = { limit: limit, sort: '-top -reply'};
 	var result = yield topic.list(query, options);
+	result = result.map(function(item) {
+		return _.pick(item, ['_id', 'title']);
+	});
 	this.body = {code: 0, data: result};
-	console.log(result);
+
 }
 
 exports.add = function *(next) {
@@ -25,14 +29,19 @@ exports.add = function *(next) {
 
 exports.find = function *(next) {
 	console.log('find');
-	console.log(this.req.query);
 	var url = this.request.url || '';
 	var index = url.indexOf('?');
 	var string = index == -1 ? '' : url.substr(index + 1)
 	var req = querystring.parse(string);
-	console.log(req.id);
-	var result = yield topic.find(req.id);
-	this.body = {code: 0, data: result};
+	var code = 0, data = {};
+	try {
+		data = yield topic.find(req.id);
+	} catch (e) {
+		code = 1;
+	} finally {
+		this.body = {code: code, data: data}
+		console.log(this.body);
+	}
 }
 
 
