@@ -18,10 +18,10 @@ exports.list = function *(next) {
 }
 
 exports.add = function *(next) {
-	console.log('addTopic');
+	console.log('add');
 	var title = this.request.body.title;
 	var content = this.request.body.content;
-	//var authorId 
+	var userId = this.request.body.userId;
 	var result = yield topic.add(title, content);
 	this.body = {code: 0, data: {_id: result[0]._id, title: result[0].title}};
 	console.log(this.body);
@@ -29,18 +29,14 @@ exports.add = function *(next) {
 
 exports.find = function *(next) {
 	console.log('find');
-	var url = this.request.url || '';
-	var index = url.indexOf('?');
-	var string = index == -1 ? '' : url.substr(index + 1)
-	var req = querystring.parse(string);
+	var topicId = this.query._id;
 	var code = 0, data = {};
 	try {
-		data = yield topic.find(req.id);
+		data = yield topic.find(topicId);
 	} catch (e) {
 		code = 1;
 	} finally {
 		this.body = {code: code, data: data}
-		console.log(this.body);
 	}
 }
 

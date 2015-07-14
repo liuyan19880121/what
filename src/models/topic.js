@@ -5,7 +5,7 @@ var ObjectId  = Schema.ObjectId;
 var TopicSchema = new Schema({
   title: { type: String },
   content: { type: String },
-  //authorId: { type: ObjectId },
+  //userId: { type: ObjectId },
   create: { type: Date, default: Date.now },
   update: { type: Date, default: Date.now },
   reply:  { type: Date, default: Date.now },
@@ -14,6 +14,6 @@ var TopicSchema = new Schema({
 });
 
 TopicSchema.index({top: -1, reply: -1});
-TopicSchema.index({authorId: 1, create: -1});
+TopicSchema.index({userId: 1, create: -1});
 
 mongoose.model('Topic', TopicSchema);

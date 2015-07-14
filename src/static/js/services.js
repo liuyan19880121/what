@@ -15,7 +15,7 @@ app
         },  add = function(data) {
             return api.topic.save({code: 'add'}, data).$promise;
         },  find = function(id) {
-            return api.topic.get({code: 'find', id: id}).$promise;
+            return api.topic.get({code: 'find', _id: id}).$promise;
         },  update = function(data) {
             return api.topic.save({code: 'update'}, data).$promise;
         }
