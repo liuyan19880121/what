@@ -10,6 +10,16 @@ app
     })
   }
 ])
+.controller('loginCtrl', ['$scope', '$routeParams', 'user',
+  function($scope, $routeParams, user) {
+    $scope.user = {};
+    $scope.commit = function() {
+      user.login($scope.user).then(function(res){
+        console.log(res);
+      }, console.log)
+    }
+  }
+])
 .controller('topicCtrl', ['$scope', '$routeParams', 'topic',
   function($scope, $routeParams, topic) {
     var topicID = $routeParams.id;

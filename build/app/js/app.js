@@ -8,6 +8,7 @@ app.config(['$routeProvider', '$locationProvider',
       .when('/topic/new', { templateUrl: 'topic-editor.html', controller: 'topicEditorCtrl' })
       .when('/topic/edit/:id', { templateUrl: 'topic-editor.html', controller: 'topicEditorCtrl' })
       .when('/topic/:id', { templateUrl: 'index.html', controller: 'topicCtrl' })
+      .when('/login', { templateUrl: 'login.html', controller: 'loginCtrl' })
       .otherwise({redirectTo: '/'});
       $locationProvider.html5Mode({enabled: true, requireBase: false});
 }]);
@@ -21,6 +22,16 @@ app
     }, function(err){
       console.log(err);
     })
+  }
+])
+.controller('loginCtrl', ['$scope', '$routeParams', 'user',
+  function($scope, $routeParams, user) {
+    $scope.user = {};
+    $scope.commit = function() {
+      user.login($scope.user).then(function(res){
+        console.log(res);
+      }, console.log)
+    }
   }
 ])
 .controller('topicCtrl', ['$scope', '$routeParams', 'topic',
@@ -106,22 +117,38 @@ app
 .factory('api', ['$resource', 
   function($resource) {
       return {
-          topic: $resource('/api/topic/:code')
+          topic: $resource('/api/topic/:code'),
+          user:  $resource('/api/user/:code')
       }
   }
 ])
 .factory('topic', ['api',
     function (api) {
-        var list = function () {
-            return api.topic.get({code: 'list'}).$promise;
-        },  add = function(data) {
-            return api.topic.save({code: 'add'}, data).$promise;
-        },  find = function(id) {
-            return api.topic.get({code: 'find', _id: id}).$promise;
-        },  update = function(data) {
-            return api.topic.save({code: 'update'}, data).$promise;
+        return {
+            list: function () {
+                return api.topic.get({code: 'list'}).$promise;
+            },
+            add: function(data) {
+                return api.topic.save({code: 'add'}, data).$promise;
+            },
+            find: function(id) {
+                return api.topic.get({code: 'find', _id: id}).$promise;
+            },
+            update: function(data) {
+                return api.topic.save({code: 'update'}, data).$promise;
+            }
         }
-
-        return {list: list, add: add, find: find, update: update};
+    }
+])
+.factory('user', ['api',
+    function (api) {
+        var user = {};
+        var methods = 'login logout logon active reset'.split(' ');
+        angular.forEach(methods, function(name){
+            user[name] = function(data){
+                return api.user.save({code: name}, data).$promise;
+            }
+        })
+        return user;
     }
 ])

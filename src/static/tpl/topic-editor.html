@@ -1,29 +1,27 @@
-<div>
-    <div ng-include="'header.html'"></div>
-    <div id="main">
-        <form accept-charset="UTF-8">
-            <div class="edit-container">
-                <div class="topic-area">
-                    <input type="text" class="topic-text-input" placeholder="标题" ng-model="topic.title"/>
+<div ng-include="'header.html'"></div>
+<div id="main">
+    <form accept-charset="UTF-8">
+        <div class="edit-container">
+            <div class="topic-area">
+                <input type="text" class="topic-text-input" placeholder="标题" ng-model="topic.title"/>
+            </div>
+            <div class="topic-content-container" ng-init="editSelect=true">
+                <div class="topic-tab-area tabnav">
+                    <nav class="tabnav-tabs">
+                        <a href="" ng-class="['tabnav-tab', {selected: editSelect}]" ng-click="editSelect=true">编辑</a>
+                        <a href="" ng-class="['tabnav-tab', {selected: !editSelect}]" ng-click="preview(editSelect);editSelect=false">预览</a>
+                    </nav>
                 </div>
-                <div class="topic-content-container" ng-init="editSelect=true">
-                    <div class="topic-tab-area tabnav">
-                        <nav class="tabnav-tabs">
-                            <a href="" ng-class="['tabnav-tab', {selected: editSelect}]" ng-click="editSelect=true">编辑</a>
-                            <a href="" ng-class="['tabnav-tab', {selected: !editSelect}]" ng-click="preview(editSelect);editSelect=false">预览</a>
-                        </nav>
-                    </div>
-                    <div ng-class="['topic-area',{hidden:!editSelect}]">
-                        <textarea class="topic-text-input content-textarea" placeholder="内容" ng-model="topic.content"></textarea>
-                    </div>
-                    <div ng-class="['topic-area','content-underline',{hidden:editSelect}]">
-                        <markdown></markdown>
-                    </div>
-                    <div class="topic-action wrapper">
-                        <button type="submit" class="btn btn-primary right" ng-click="commit()" ng-disabled="!topic.title || !topic.content">提交</button>
-                    </div>
+                <div ng-class="['topic-area',{hidden:!editSelect}]">
+                    <textarea class="topic-text-input content-textarea" placeholder="内容" ng-model="topic.content"></textarea>
+                </div>
+                <div ng-class="['topic-area','content-underline',{hidden:editSelect}]">
+                    <markdown></markdown>
+                </div>
+                <div class="topic-action wrapper">
+                    <button type="submit" class="btn btn-primary right" ng-click="commit()" ng-disabled="!topic.title || !topic.content">提交</button>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>
