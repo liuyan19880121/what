@@ -63,10 +63,10 @@ module.run(["$templateCache", function($templateCache) {
     "                    <div ng-class=\"['topic-area',{hidden:!editSelect}]\">\n" +
     "                        <textarea class=\"topic-text-input content-textarea\" placeholder=\"内容\" ng-model=\"topic.content\"></textarea>\n" +
     "                    </div>\n" +
-    "                    <div ng-class=\"['topic-area',{hidden:editSelect}]\">\n" +
+    "                    <div ng-class=\"['topic-area','content-underline',{hidden:editSelect}]\">\n" +
     "                        <markdown></markdown>\n" +
     "                    </div>\n" +
-    "                    <div class=\"form-actions\">\n" +
+    "                    <div class=\"topic-action wrapper\">\n" +
     "                        <button type=\"submit\" class=\"btn btn-primary right\" ng-click=\"commit()\" ng-disabled=\"!topic.title || !topic.content\">提交</button>\n" +
     "                    </div>\n" +
     "                </div>\n" +
@@ -106,7 +106,7 @@ catch(err) { module = angular.module("ngTemplate", []); }
 module.run(["$templateCache", function($templateCache) {
   "use strict";
   $templateCache.put("topic.html",
-    "<div class=\"topic-title-wrapper\">\n" +
+    "<div class=\"topic-title-wrapper underline\">\n" +
     "	<div class=\"topic-edit-action right\">\n" +
     "		<a href=\"/topic/edit/{{topic._id}}\" class=\"btn btn-sm btn-primary\">编辑</a>\n" +
     "	</div>\n" +

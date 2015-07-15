@@ -129,8 +129,18 @@ input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
   float: right;
 }
 
-.wrapper {
-/*  overflow: hidden;*/
+.wrapper:before {
+  display: table;
+  content: "";
+}
+.wrapper:after {
+  display: table;
+  clear: both;
+  content: "";
+}
+
+.underline {
+  border-bottom: 1px solid #eee;
 }
 .markdown-body {
   overflow: visible;
@@ -267,20 +277,13 @@ input.topic-text-input, .topic-text-input {
   border-radius: 3px 3px 0 0;
 }
 
-.form-actions {
-  padding: 10px;
-  border-top: 1px solid #eee;
+.topic-action {
+  padding: 0 10px 10px;
 }
 
-.form-actions:before {
-  display: table;
-  content: "";
-}
-
-.form-actions:after {
-  display: table;
-  clear: both;
-  content: "";
+.content-underline {
+  border-bottom: 1px solid #eee;
+  margin-bottom: 10px;
 }
 .content-container {
     float: left;
@@ -351,8 +354,9 @@ input.topic-text-input, .topic-text-input {
 
 .topic-title-wrapper {
 	min-height: 42px;
-	border-bottom: 1px solid #eee;
 }
+
+
 
 .topic-title-show {
 	line-height: 1.1;
