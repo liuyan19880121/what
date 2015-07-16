@@ -1,7 +1,7 @@
 var proxy = require('../proxy_thunkify');
-var topic = proxy.topic;
-var _ = require('lodash')
-var querystring = require('querystring');
+var Topic = proxy.Topic;
+var _ = require('lodash');
+var hander = require('../lib/error_hander')
 
 
 exports.list = function *(next) {
@@ -9,12 +9,11 @@ exports.list = function *(next) {
 	var limit = 12;
 	var query = {deleted: false};
 	var options = { limit: limit, sort: '-top -reply'};
-	var result = yield topic.list(query, options);
+	var result = yield Topic.list(query, options);
 	result = result.map(function(item) {
 		return _.pick(item, ['_id', 'title']);
 	});
-	this.body = {code: 0, data: result};
-
+	hander.ok(this, result);
 }
 
 exports.add = function *(next) {
@@ -22,22 +21,21 @@ exports.add = function *(next) {
 	var title = this.request.body.title;
 	var content = this.request.body.content;
 	var userId = this.request.body.userId;
-	var result = yield topic.add(title, content);
-	this.body = {code: 0, data: {_id: result[0]._id, title: result[0].title}};
-	console.log(this.body);
+	var result = yield Topic.add(title, content);
+	hander.ok(this, {_id: result[0]._id, title: result[0].title});
 }
 
 exports.find = function *(next) {
 	console.log('find');
 	var topicId = this.query._id;
-	var code = 0, data = {};
+	var data = {};
 	try {
-		data = yield topic.find(topicId);
+		data = yield Topic.find(topicId);
 	} catch (e) {
-		code = 1;
-	} finally {
-		this.body = {code: code, data: data}
+		return hander.topicNotExists(this);
 	}
+	if(!data) return hander.topicNotExists(this);
+	hander.ok(this, data);
 }
 
 
@@ -47,6 +45,6 @@ exports.update = function *(next) {
 	var title = this.request.body.title;
 	var content = this.request.body.content;
 	var topicId = this.request.body._id;
-	var result = yield topic.update(topicId, title, content);
-	this.body = {code: 0, data: result};
+	var result = yield Topic.update(topicId, title, content);
+	hander.ok(this);
 }

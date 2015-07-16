@@ -9,7 +9,9 @@ mongoose.connect(config.mongoConnectString, function (err) {
 });
 
 // models
+require('./user');
 require('./topic');
 
+exports.User  = mongoose.model('User');
 exports.Topic  = mongoose.model('Topic');
 

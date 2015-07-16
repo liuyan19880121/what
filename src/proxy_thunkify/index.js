@@ -1,1 +1,2 @@
-exports.topic        = require('./topic');
+exports.User  = require('./user');
+exports.Topic = require('./topic');
