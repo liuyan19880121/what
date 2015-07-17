@@ -1,7 +1,7 @@
 var proxy = require('../proxy_thunkify');
 var Topic = proxy.Topic;
 var _ = require('lodash');
-var hander = require('../lib/error_hander')
+var hander = require('../common/error_hander')
 
 
 exports.list = function *(next) {
@@ -18,10 +18,14 @@ exports.list = function *(next) {
 
 exports.add = function *(next) {
 	console.log('add');
+	//check login
+	var user = this.session.user;
+	if(!user) return hander.noLogin(this);
+
 	var title = this.request.body.title;
 	var content = this.request.body.content;
-	var userId = this.request.body.userId;
-	var result = yield Topic.add(title, content);
+
+	var result = yield Topic.add(title, content, user._id);
 	hander.ok(this, {_id: result[0]._id, title: result[0].title});
 }
 
@@ -41,10 +45,31 @@ exports.find = function *(next) {
 
 exports.update = function *(next) {
 	console.log('update');
-	console.log(this.request.body)
+	//check login
+	var user = this.session.user;
+	if(!user) return hander.noLogin(this);
+
+	//get parameters
 	var title = this.request.body.title;
 	var content = this.request.body.content;
 	var topicId = this.request.body._id;
-	var result = yield Topic.update(topicId, title, content);
+
+	//validation
+
+	// get topic information
+	var topic = yield Topic.find(topicId);
+
+	//check owner
+	// console.log(topic.authorId);
+	// console.log(user._id);
+	// console.log(topic.authorId.equals(user._id));
+	// console.log(topic.authorId == user._id);
+	// console.log(topic.authorId === user._id);
+	if(!topic.authorId.equals(user._id)) return hander.notTopicOwner(this);
+
+	// update
+	yield Topic.update(topicId, title, content);
+
+	//respond to client
 	hander.ok(this);
 }

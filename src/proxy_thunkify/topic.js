@@ -19,6 +19,7 @@ exports.add = function(title, content, authorId) {
 		var topic       = new Topic();
 		topic.title     = title;
 		topic.content   = content;
+		topic.authorId  = authorId;
 		topic.save(cb);
 	}
 }

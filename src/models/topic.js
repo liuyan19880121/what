@@ -5,7 +5,7 @@ var ObjectId  = Schema.ObjectId;
 var TopicSchema = new Schema({
   title: { type: String },
   content: { type: String },
-  //userId: { type: ObjectId },
+  authorId: { type: ObjectId },
   create: { type: Date, default: Date.now },
   update: { type: Date, default: Date.now },
   reply:  { type: Date, default: Date.now },

@@ -1,5 +1,6 @@
 var models = require('../models');
 var User  = models.User;
+//var bcrypt = require('bcrypt');
 
 exports.findByLogin = function(login) {
     return function(cb) {
@@ -16,3 +17,9 @@ exports.findByLogin = function(login) {
 // User.imageUrl   = '';
 // User.signature  = 'what';
 // User.save(function(){});
+
+// User.findOne({'$or':[{username: 'admin'},{email: 'admin'}]}, function(err, user) {
+//     var new_password = bcrypt.hashSync(user.password, 10);
+//     user.password = new_password;
+//     user.save(function(){})
+// });
