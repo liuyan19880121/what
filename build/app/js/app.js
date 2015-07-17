@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('App', ['ngRoute', 'ngResource', 'ngTemplate', 'ngSanitize']);
+var app = angular.module('App', ['ngRoute', 'ngResource', 'ngCookies', 'ngTemplate', 'ngSanitize']);
 'use strict';
 app.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
@@ -24,12 +24,14 @@ app
     })
   }
 ])
-.controller('loginCtrl', ['$scope', '$routeParams', 'user',
-  function($scope, $routeParams, user) {
+.controller('loginCtrl', ['$scope', '$routeParams', '$cookieStore', 'user',
+  function($scope, $routeParams, $cookieStore, user) {
     $scope.user = {};
     $scope.commit = function() {
       user.login($scope.user).then(function(res){
         console.log(res);
+        if(res.code !== 'ok') return;
+        $cookieStore.put('accessToken', res.accessToken);
       }, console.log)
     }
   }
@@ -122,33 +124,38 @@ app
       }
   }
 ])
-.factory('topic', ['api',
-    function (api) {
-        return {
-            list: function () {
-                return api.topic.get({code: 'list'}).$promise;
-            },
-            add: function(data) {
-                return api.topic.save({code: 'add'}, data).$promise;
-            },
-            find: function(id) {
-                return api.topic.get({code: 'find', _id: id}).$promise;
-            },
-            update: function(data) {
-                return api.topic.save({code: 'update'}, data).$promise;
-            }
+.factory('createPostMethod', ['api', '$cookieStore',
+    function(api, $cookieStore) {
+        return function(result, resource, methods) {
+            angular.forEach(methods.split(' '), function(name){
+                result[name] = function(data){
+                    var accessToken = $cookieStore.get('accessToken');
+                    if(accessToken) data.accessToken = accessToken;
+                    return api[resource].save({code: name}, data).$promise;
+                }
+            });
         }
     }
 ])
-.factory('user', ['api',
-    function (api) {
+.factory('topic', ['api', '$cookieStore', 'createPostMethod', 
+    function (api, $cookieStore, createPostMethod) {
+        var topic = {};
+        topic.list = function () {
+            return api.topic.get({code: 'list'}).$promise;
+        };
+        topic.find = function(id) {
+            return api.topic.get({code: 'find', _id: id}).$promise;
+        };
+    
+        createPostMethod(topic, 'topic', 'add update');
+
+        return topic;
+    }
+])
+.factory('user', ['api', '$cookieStore', 'createPostMethod',
+    function (api, $cookieStore, createPostMethod) {
         var user = {};
-        var methods = 'login logout logon active reset'.split(' ');
-        angular.forEach(methods, function(name){
-            user[name] = function(data){
-                return api.user.save({code: name}, data).$promise;
-            }
-        })
+        createPostMethod(user, 'user', 'login logout logon active reset');
         return user;
     }
 ])

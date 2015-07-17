@@ -5,6 +5,7 @@
   "description": "BSS",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^0.8.3",
     "koa": "^0.21.0",
     "koa-body": "^1.2.1",
     "koa-ejs": "^2.0.1",
