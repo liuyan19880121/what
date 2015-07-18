@@ -10,14 +10,15 @@ app
     })
   }
 ])
-.controller('loginCtrl', ['$scope', '$routeParams', '$cookieStore', 'user',
-  function($scope, $routeParams, $cookieStore, user) {
+.controller('loginCtrl', ['$scope', '$routeParams', '$cookieStore', 'user', 'global',
+  function($scope, $routeParams, $cookieStore, user, global) {
     $scope.user = {};
     $scope.commit = function() {
       user.login($scope.user).then(function(res){
         console.log(res);
         if(res.code !== 'ok') return;
         $cookieStore.put('accessToken', res.accessToken);
+        global.user = res.data;
       }, console.log)
     }
   }

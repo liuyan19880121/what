@@ -31,3 +31,10 @@ exports.login = function *(next) {
     //respond to client
     hander.ok(this, _.pick(user,['username', 'nickname', 'imageUrl', 'signature']), this.sessionId);
 }
+
+exports.info = function *(next) {
+    console.log('info');
+    var user = this.session.user;
+    if(!user) return hander.noLogin(this);
+    hander.ok(this, user);
+}

@@ -1,6 +1,12 @@
 'use strict';
 
 app
+.factory('global', ['$rootScope', 
+    function($rootScope) {
+        var global = $rootScope.global = {};
+        return global;
+    }
+])
 .factory('api', ['$resource', 
   function($resource) {
       return {
@@ -40,6 +46,9 @@ app
 .factory('user', ['api', '$cookieStore', 'createPostMethod',
     function (api, $cookieStore, createPostMethod) {
         var user = {};
+        user.info = function(accessToken) {
+            return api.user.get({code: 'info', accessToken: accessToken}).$promise;
+        };
         createPostMethod(user, 'user', 'login logout logon active reset');
         return user;
     }
