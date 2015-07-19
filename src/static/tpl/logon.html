@@ -1,0 +1,29 @@
+<div ng-include="'header.html'"></div>
+<div id="main">
+	<div class="logon-form">
+		<form name="logon" accept-charset="UTF-8">
+			<div class="auth-form-header">
+				<h1>加入我们</h1>
+			</div>
+			<ol class="logon-steps">
+				<li class="current"><strong>第一步：</strong>创建个人账户</li>
+				<li><strong>第二步：</strong>激活账户</li>
+			</ol>
+			<div class="auth-form-body">
+				<label>用户名</label>
+				<input type="text" class="input-block" name="username" ng-model="user.username" required>
+				<label>邮箱
+					<dd class="logon-error" ng-if="logon.email.$error.email">邮箱格式不合法</dd>
+				</label>
+				<input type="email" class="input-block" name="email" ng-model="user.email" required>
+				<label>密码</label>
+				<input type="password" class="input-block" name="password" ng-model="user.password" required>
+				<label>确认密码
+					<dd class="logon-error" ng-if="user.password != password2">两次输入的密码不一致</dd>
+				</label>
+				<input type="password" class="input-block" name="password2" ng-model="password2" required>
+				<input type="submit" class="btn" value="创建账号" ng-click="commit()">
+			</div>
+		</form>
+	</div>
+</div>

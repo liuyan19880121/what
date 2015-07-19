@@ -60,15 +60,15 @@ exports.update = function *(next) {
 	var topic = yield Topic.find(topicId);
 
 	//check owner
-	// console.log(topic.authorId);
-	// console.log(user._id);
-	// console.log(topic.authorId.equals(user._id));
-	// console.log(topic.authorId == user._id);
-	// console.log(topic.authorId === user._id);
+	// if(topic.authorId && !topic.authorId.equals(user._id)) return hander.notTopicOwner(this);
 	if(!topic.authorId.equals(user._id)) return hander.notTopicOwner(this);
 
 	// update
-	yield Topic.update(topicId, title, content);
+	topic.title = title;
+	topic.content = content;
+	topic.update = Date.now();
+	//topic.authorId = user._id;
+	yield Topic.save(topic);
 
 	//respond to client
 	hander.ok(this);

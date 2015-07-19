@@ -1,5 +1,20 @@
 'use strict';
 var app = angular.module('App', ['ngRoute', 'ngResource', 'ngCookies', 'ngTemplate', 'ngSanitize']);
+
+app.run(['$cookieStore','user', 'global', 
+    function($cookieStore, user, global){
+        var accessToken = $cookieStore.get('accessToken');
+        global.user = null;
+        user.info(accessToken).then(function(res){
+            console.log(res);
+            if(res.code != 'ok') {
+                global.user = null;
+                return;
+            }
+            global.user = res.data;
+        }, console.log)
+    }
+])
 'use strict';
 app.config(['$routeProvider', '$locationProvider',
   function($routeProvider, $locationProvider) {
@@ -8,6 +23,7 @@ app.config(['$routeProvider', '$locationProvider',
       .when('/topic/new', { templateUrl: 'topic-editor.html', controller: 'topicEditorCtrl' })
       .when('/topic/edit/:id', { templateUrl: 'topic-editor.html', controller: 'topicEditorCtrl' })
       .when('/topic/:id', { templateUrl: 'index.html', controller: 'topicCtrl' })
+      .when('/logon', { templateUrl: 'logon.html', controller: 'logonCtrl' })
       .when('/login', { templateUrl: 'login.html', controller: 'loginCtrl' })
       .otherwise({redirectTo: '/'});
       $locationProvider.html5Mode({enabled: true, requireBase: false});
@@ -24,14 +40,28 @@ app
     })
   }
 ])
-.controller('loginCtrl', ['$scope', '$routeParams', '$cookieStore', 'user',
-  function($scope, $routeParams, $cookieStore, user) {
+.controller('logonCtrl', ['$scope', '$routeParams', '$cookieStore', 'user', 'global',
+  function($scope, $routeParams, $cookieStore, user, global) {
+    $scope.user = {};
+    $scope.commit = function() {
+      user.logon($scope.user).then(function(res){
+        console.log(res);
+        if(res.code !== 'ok') return;
+        $cookieStore.put('accessToken', res.accessToken);
+        global.user = res.data;
+      }, console.log)
+    }
+  }
+])
+.controller('loginCtrl', ['$scope', '$routeParams', '$cookieStore', 'user', 'global',
+  function($scope, $routeParams, $cookieStore, user, global) {
     $scope.user = {};
     $scope.commit = function() {
       user.login($scope.user).then(function(res){
         console.log(res);
         if(res.code !== 'ok') return;
         $cookieStore.put('accessToken', res.accessToken);
+        global.user = res.data;
       }, console.log)
     }
   }
@@ -116,6 +146,12 @@ app.directive('markdown', function() {
 'use strict';
 
 app
+.factory('global', ['$rootScope', 
+    function($rootScope) {
+        var global = $rootScope.global = {};
+        return global;
+    }
+])
 .factory('api', ['$resource', 
   function($resource) {
       return {
@@ -155,6 +191,9 @@ app
 .factory('user', ['api', '$cookieStore', 'createPostMethod',
     function (api, $cookieStore, createPostMethod) {
         var user = {};
+        user.info = function(accessToken) {
+            return api.user.get({code: 'info', accessToken: accessToken}).$promise;
+        };
         createPostMethod(user, 'user', 'login logout logon active reset');
         return user;
     }

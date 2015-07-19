@@ -7,7 +7,7 @@ module.run(["$templateCache", function($templateCache) {
     "<div class=\"header\">\n" +
     "  <div class=\"container wrapper\">\n" +
     "      <div class=\"left\"><p>what</p></div>\n" +
-    "      <div class=\"header-actions right\">\n" +
+    "      <div class=\"header-actions right\" ng-if=\"!global.user\">\n" +
     "      	<a class=\"btn btn-primary\" href=\"/logon\">注册</a>\n" +
     "      	<a class=\"btn\" href=\"/login\">登录</a>\n" +
     "      </div>\n" +
@@ -40,19 +40,55 @@ module.run(["$templateCache", function($templateCache) {
     "<div ng-include=\"'header.html'\"></div>\n" +
     "<div id=\"main\">\n" +
     "	<div class=\"auth-form\">\n" +
-    "		<div class=\"auth-form-header\">\n" +
-    "			<h1>用户登录</h1>\n" +
-    "		</div>\n" +
-    "		<div class=\"auth-form-body\">\n" +
-    "			<label for=\"login_field\">\n" +
-    "				用户名或邮箱\n" +
-    "			</label>\n" +
-    "			<input type=\"text\" class=\"input-block\" name=\"login\" ng-model=\"user.login\">\n" +
-    "			<label for=\"password\">\n" +
-    "				密码 <a href=\"/password_reset\">(忘记密码)</a>\n" +
-    "			</label>\n" +
-    "			<input type=\"password\" class=\"input-block\" name=\"password\" ng-model=\"user.password\">\n" +
-    "			<input type=\"submit\" class=\"btn\" value=\"登录\" ng-click=\"commit()\">\n" +
+    "		<form accept-charset=\"UTF-8\">\n" +
+    "			<div class=\"auth-form-header\">\n" +
+    "				<h1>用户登录</h1>\n" +
+    "			</div>\n" +
+    "			<div class=\"auth-form-body\">\n" +
+    "				<label>用户名或邮箱</label>\n" +
+    "				<input type=\"text\" class=\"input-block\" name=\"login\" ng-model=\"user.login\">\n" +
+    "				<label>密码 <a href=\"/password_reset\">(忘记密码)</a></label>\n" +
+    "				<input type=\"password\" class=\"input-block\" name=\"password\" ng-model=\"user.password\">\n" +
+    "				<input type=\"submit\" class=\"btn\" value=\"登录\" ng-click=\"commit()\">\n" +
+    "			</div>\n" +
+    "		</form>\n" +
+    "	</div>\n" +
+    "</div>");
+}]);
+})();
+
+(function(module) {
+try { module = angular.module("ngTemplate"); }
+catch(err) { module = angular.module("ngTemplate", []); }
+module.run(["$templateCache", function($templateCache) {
+  "use strict";
+  $templateCache.put("logon.html",
+    "<div ng-include=\"'header.html'\"></div>\n" +
+    "<div id=\"main\">\n" +
+    "	<div class=\"logon-form\">\n" +
+    "		<form name=\"logon\" accept-charset=\"UTF-8\">\n" +
+    "			<div class=\"auth-form-header\">\n" +
+    "				<h1>加入我们</h1>\n" +
+    "			</div>\n" +
+    "			<ol class=\"logon-steps\">\n" +
+    "				<li class=\"current\"><strong>第一步：</strong>创建个人账户</li>\n" +
+    "				<li><strong>第二步：</strong>激活账户</li>\n" +
+    "			</ol>\n" +
+    "			<div class=\"auth-form-body\">\n" +
+    "				<label>用户名</label>\n" +
+    "				<input type=\"text\" class=\"input-block\" name=\"username\" ng-model=\"user.username\" required>\n" +
+    "				<label>邮箱\n" +
+    "					<dd class=\"logon-error\" ng-if=\"logon.email.$error.email\">邮箱格式不合法</dd>\n" +
+    "				</label>\n" +
+    "				<input type=\"email\" class=\"input-block\" name=\"email\" ng-model=\"user.email\" required>\n" +
+    "				<label>密码</label>\n" +
+    "				<input type=\"password\" class=\"input-block\" name=\"password\" ng-model=\"user.password\" required>\n" +
+    "				<label>确认密码\n" +
+    "					<dd class=\"logon-error\" ng-if=\"user.password != password2\">两次输入的密码不一致</dd>\n" +
+    "				</label>\n" +
+    "				<input type=\"password\" class=\"input-block\" name=\"password2\" ng-model=\"password2\" required>\n" +
+    "				<input type=\"submit\" class=\"btn\" value=\"创建账号\" ng-click=\"commit()\">\n" +
+    "			</div>\n" +
     "		</form>\n" +
     "	</div>\n" +
     "</div>");

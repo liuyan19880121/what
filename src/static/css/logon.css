@@ -1,0 +1,44 @@
+.logon-form {
+  width: 600px;
+  margin: 60px auto;
+}
+
+.logon-steps {
+  width: 100%;
+  display: table;
+  margin: 0px auto;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+  border: 1px solid #d8dee2;
+  border-top: 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.logon-steps li {
+  display: table-cell;
+  width: 33.3%;
+  padding: 10px 15px;
+  color: #ccc;
+  cursor: default;
+  border-left: 1px solid #ddd;
+  background-color: #fafafa;
+}
+
+.logon-steps li.current {
+  background-color: #fff;
+  color: #333;
+}
+
+.logon-steps li:first-child {
+  border-left: 0;
+}
+
+.logon-error {
+  display: inline-block;
+  padding: 0px;
+  font-size: 11px;
+  color: #494620;
+  background: #f7ea57;
+  border: 1px solid #c0b536;
+}

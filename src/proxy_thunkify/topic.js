@@ -29,3 +29,9 @@ exports.update = function(topicId, title, content) {
 		Topic.update({_id: topicId}, { $set: { title: title, content: content, update: Date.now()} }).exec(cb);
 	}
 }
+
+exports.save = function(topic) {
+	return function(cb) {
+		topic.save(cb);
+	}
+}

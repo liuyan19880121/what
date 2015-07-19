@@ -1,19 +1,17 @@
 <div ng-include="'header.html'"></div>
 <div id="main">
 	<div class="auth-form">
-		<div class="auth-form-header">
-			<h1>用户登录</h1>
-		</div>
-		<div class="auth-form-body">
-			<label for="login_field">
-				用户名或邮箱
-			</label>
-			<input type="text" class="input-block" name="login" ng-model="user.login">
-			<label for="password">
-				密码 <a href="/password_reset">(忘记密码)</a>
-			</label>
-			<input type="password" class="input-block" name="password" ng-model="user.password">
-			<input type="submit" class="btn" value="登录" ng-click="commit()">
+		<form accept-charset="UTF-8">
+			<div class="auth-form-header">
+				<h1>用户登录</h1>
+			</div>
+			<div class="auth-form-body">
+				<label>用户名或邮箱</label>
+				<input type="text" class="input-block" name="login" ng-model="user.login">
+				<label>密码 <a href="/password_reset">(忘记密码)</a></label>
+				<input type="password" class="input-block" name="password" ng-model="user.password">
+				<input type="submit" class="btn" value="登录" ng-click="commit()">
+			</div>
 		</form>
 	</div>
 </div>
