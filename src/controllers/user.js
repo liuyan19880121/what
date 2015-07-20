@@ -32,6 +32,14 @@ exports.login = function *(next) {
     hander.ok(this, _.pick(user,['username', 'nickname', 'imageUrl', 'signature']), this.sessionId);
 }
 
+exports.logout = function *() {
+    console.log('logout');
+    //clear session
+    this.session = null;
+
+    hander.ok(this);
+}
+
 exports.info = function *(next) {
     console.log('info');
     var user = this.session.user;

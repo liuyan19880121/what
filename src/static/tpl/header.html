@@ -1,9 +1,17 @@
 <div class="header">
-  <div class="container wrapper">
-      <div class="left"><p>what</p></div>
-      <div class="header-actions right" ng-if="!global.user">
-      	<a class="btn btn-primary" href="/logon">注册</a>
-      	<a class="btn" href="/login">登录</a>
-      </div>
-  </div>
+    <div class="container wrapper">
+        <div class="left"></div>
+        <div class="header-actions right" ng-if="!global.user">
+            <a class="btn btn-primary" href="/logon">注册</a>
+            <a class="btn" href="/login">登录</a>
+        </div>
+        <ul class="user-nav right" ng-if="global.user">
+            <li>
+                <a class="link" href="/setting">设置</a>
+            </li>
+            <li>
+                <a class="link" href="" ng-click="global.logout()">退出</a>
+            </li>
+        </ul>
+    </div>
 </div>

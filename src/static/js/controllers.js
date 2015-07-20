@@ -10,21 +10,20 @@ app
     })
   }
 ])
-.controller('logonCtrl', ['$scope', '$routeParams', '$cookieStore', 'user', 'global',
-  function($scope, $routeParams, $cookieStore, user, global) {
+.controller('logonCtrl', ['$scope', '$routeParams', '$cookieStore', '$location', 'user', 'global',
+  function($scope, $routeParams, $cookieStore, $location, user, global) {
     $scope.user = {};
     $scope.commit = function() {
       user.logon($scope.user).then(function(res){
         console.log(res);
         if(res.code !== 'ok') return;
         $cookieStore.put('accessToken', res.accessToken);
-        global.user = res.data;
       }, console.log)
     }
   }
 ])
-.controller('loginCtrl', ['$scope', '$routeParams', '$cookieStore', 'user', 'global',
-  function($scope, $routeParams, $cookieStore, user, global) {
+.controller('loginCtrl', ['$scope', '$routeParams', '$cookieStore', '$location', 'user', 'global',
+  function($scope, $routeParams, $cookieStore, $location, user, global) {
     $scope.user = {};
     $scope.commit = function() {
       user.login($scope.user).then(function(res){
@@ -32,6 +31,7 @@ app
         if(res.code !== 'ok') return;
         $cookieStore.put('accessToken', res.accessToken);
         global.user = res.data;
+        $location.path('/');
       }, console.log)
     }
   }

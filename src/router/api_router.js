@@ -9,6 +9,8 @@ module.exports = function(app){
 //user
 router.get('/api/user/info', userCtl.info);
 router.post('/api/user/login', userCtl.login);
+router.post('/api/user/logout', userCtl.logout);
+
 
 //topic
 router.get('/api/topic/list', topicCtl.list);

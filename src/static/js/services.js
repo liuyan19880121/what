@@ -1,9 +1,16 @@
 'use strict';
 
 app
-.factory('global', ['$rootScope', 
-    function($rootScope) {
+.factory('global', ['$rootScope', '$location', 'user',
+    function($rootScope, $location, user) {
         var global = $rootScope.global = {};
+        global.logout = function() {
+            user.logout().then(function(res){
+                if(res.code != 'ok') console.log(res);
+                global.user = null;
+                $location.path('/');
+            }, console.log)
+        }
         return global;
     }
 ])
@@ -21,6 +28,7 @@ app
             angular.forEach(methods.split(' '), function(name){
                 result[name] = function(data){
                     var accessToken = $cookieStore.get('accessToken');
+                    data = data || {}
                     if(accessToken) data.accessToken = accessToken;
                     return api[resource].save({code: name}, data).$promise;
                 }

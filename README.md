@@ -40,4 +40,8 @@ git commit -m "first commit"
 git remote add origin git@github.com:liuyan19880121/what.git
 git push -u origin master
 
+git reset --hard
+git fetch origin master
+git log -p master..origin/master
+git merge origin/master
 ```

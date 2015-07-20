@@ -8,16 +8,32 @@
 
 .container {
   width: 980px;
-  height: 36px;
+  height: 28px;
   margin-right: auto;
   margin-left: auto;
+}
+
+.header-actions {
+  margin-top: -3px;
+  margin-bottom: -3px;
 }
 
 .header-actions .btn {
   margin-left: 5px;
 }
 
-.input-block {
-  margin-top: 5px;
-  margin-bottom: 15px;
+.user-nav .link {
+  display: block;
+  padding: 4px 8px;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 20px;
+}
+
+.user-nav {
+  list-style: none;
+}
+
+.user-nav li {
+  float: left;
 }

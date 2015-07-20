@@ -65,18 +65,34 @@
 
 .container {
   width: 980px;
-  height: 36px;
+  height: 28px;
   margin-right: auto;
   margin-left: auto;
+}
+
+.header-actions {
+  margin-top: -3px;
+  margin-bottom: -3px;
 }
 
 .header-actions .btn {
   margin-left: 5px;
 }
 
-.input-block {
-  margin-top: 5px;
-  margin-bottom: 15px;
+.user-nav .link {
+  display: block;
+  padding: 4px 8px;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 20px;
+}
+
+.user-nav {
+  list-style: none;
+}
+
+.user-nav li {
+  float: left;
 }
 .auth-form {
   width: 400px;
@@ -310,6 +326,21 @@ label {
 .underline {
   border-bottom: 1px solid #eee;
 }
+
+.link {
+  padding-right: 3px;
+  margin-bottom: 2px;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1.2;
+  color: #333;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #4078c0;
+  text-decoration: none;
+}
 .markdown-body {
   overflow: visible;
   font-family: "Helvetica Neue", Helvetica, "Segoe UI", Arial, freesans, sans-serif;
@@ -496,20 +527,6 @@ input.topic-text-input, .topic-text-input {
     border-bottom: 1px solid #e5e5e5;
 }
 
-.title-link {
-  padding-right: 3px;
-  margin-bottom: 2px;
-  font-size: 15px;
-  font-weight: bold;
-  line-height: 1.2;
-  color: #333;
-  text-decoration: none;
-}
-
-.title-link:hover {
-  color: #4078c0;
-  text-decoration: none;
-}
 .topic-content-wrapper {
   position: relative;
   margin-top: 15px;

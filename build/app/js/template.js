@@ -5,13 +5,21 @@ module.run(["$templateCache", function($templateCache) {
   "use strict";
   $templateCache.put("header.html",
     "<div class=\"header\">\n" +
-    "  <div class=\"container wrapper\">\n" +
-    "      <div class=\"left\"><p>what</p></div>\n" +
-    "      <div class=\"header-actions right\" ng-if=\"!global.user\">\n" +
-    "      	<a class=\"btn btn-primary\" href=\"/logon\">注册</a>\n" +
-    "      	<a class=\"btn\" href=\"/login\">登录</a>\n" +
-    "      </div>\n" +
-    "  </div>\n" +
+    "    <div class=\"container wrapper\">\n" +
+    "        <div class=\"left\"></div>\n" +
+    "        <div class=\"header-actions right\" ng-if=\"!global.user\">\n" +
+    "            <a class=\"btn btn-primary\" href=\"/logon\">注册</a>\n" +
+    "            <a class=\"btn\" href=\"/login\">登录</a>\n" +
+    "        </div>\n" +
+    "        <ul class=\"user-nav right\" ng-if=\"global.user\">\n" +
+    "            <li>\n" +
+    "                <a class=\"link\" href=\"/setting\">设置</a>\n" +
+    "            </li>\n" +
+    "            <li>\n" +
+    "                <a class=\"link\" href=\"\" ng-click=\"global.logout()\">退出</a>\n" +
+    "            </li>\n" +
+    "        </ul>\n" +
+    "    </div>\n" +
     "</div>");
 }]);
 })();
@@ -155,7 +163,7 @@ module.run(["$templateCache", function($templateCache) {
     "<ul class=\"table-list\">\n" +
     "    <li class=\"table-list-item\" ng-repeat=\"topic in topicList\">\n" +
     "        <div class=\"table-list-cell\">\n" +
-    "            <a ng-href=\"{{'/topic/'+topic._id}}\" class=\"title-link\"> \n" +
+    "            <a ng-href=\"{{'/topic/'+topic._id}}\" class=\"link\"> \n" +
     "                {{topic.title}}\n" +
     "            </a>\n" +
     "        </div>\n" +

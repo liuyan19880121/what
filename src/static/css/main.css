@@ -146,3 +146,18 @@ label {
 .underline {
   border-bottom: 1px solid #eee;
 }
+
+.link {
+  padding-right: 3px;
+  margin-bottom: 2px;
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1.2;
+  color: #333;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #4078c0;
+  text-decoration: none;
+}

@@ -40,21 +40,20 @@ app
     })
   }
 ])
-.controller('logonCtrl', ['$scope', '$routeParams', '$cookieStore', 'user', 'global',
-  function($scope, $routeParams, $cookieStore, user, global) {
+.controller('logonCtrl', ['$scope', '$routeParams', '$cookieStore', '$location', 'user', 'global',
+  function($scope, $routeParams, $cookieStore, $location, user, global) {
     $scope.user = {};
     $scope.commit = function() {
       user.logon($scope.user).then(function(res){
         console.log(res);
         if(res.code !== 'ok') return;
         $cookieStore.put('accessToken', res.accessToken);
-        global.user = res.data;
       }, console.log)
     }
   }
 ])
-.controller('loginCtrl', ['$scope', '$routeParams', '$cookieStore', 'user', 'global',
-  function($scope, $routeParams, $cookieStore, user, global) {
+.controller('loginCtrl', ['$scope', '$routeParams', '$cookieStore', '$location', 'user', 'global',
+  function($scope, $routeParams, $cookieStore, $location, user, global) {
     $scope.user = {};
     $scope.commit = function() {
       user.login($scope.user).then(function(res){
@@ -62,6 +61,7 @@ app
         if(res.code !== 'ok') return;
         $cookieStore.put('accessToken', res.accessToken);
         global.user = res.data;
+        $location.path('/');
       }, console.log)
     }
   }
@@ -146,9 +146,16 @@ app.directive('markdown', function() {
 'use strict';
 
 app
-.factory('global', ['$rootScope', 
-    function($rootScope) {
+.factory('global', ['$rootScope', '$location', 'user',
+    function($rootScope, $location, user) {
         var global = $rootScope.global = {};
+        global.logout = function() {
+            user.logout().then(function(res){
+                if(res.code != 'ok') console.log(res);
+                global.user = null;
+                $location.path('/');
+            }, console.log)
+        }
         return global;
     }
 ])
@@ -166,6 +173,7 @@ app
             angular.forEach(methods.split(' '), function(name){
                 result[name] = function(data){
                     var accessToken = $cookieStore.get('accessToken');
+                    data = data || {}
                     if(accessToken) data.accessToken = accessToken;
                     return api[resource].save({code: name}, data).$promise;
                 }
