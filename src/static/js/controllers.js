@@ -10,20 +10,21 @@ app
     })
   }
 ])
-.controller('logonCtrl', ['$scope', '$routeParams', '$cookieStore', '$location', 'user', 'global',
-  function($scope, $routeParams, $cookieStore, $location, user, global) {
+.controller('logonCtrl', ['app', '$scope', '$routeParams', '$cookieStore', '$location', 'user',
+  function(app, $scope, $routeParams, $cookieStore, $location, user) {
     $scope.user = {};
     $scope.commit = function() {
       user.logon($scope.user).then(function(res){
         console.log(res);
         if(res.code !== 'ok') return;
         $cookieStore.put('accessToken', res.accessToken);
-      }, console.log)
+      })
     }
   }
 ])
-.controller('loginCtrl', ['$scope', '$routeParams', '$cookieStore', '$location', 'user', 'global',
-  function($scope, $routeParams, $cookieStore, $location, user, global) {
+.controller('loginCtrl', ['app', '$scope', '$routeParams', '$cookieStore', '$location', 'user',
+  function(app, $scope, $routeParams, $cookieStore, $location, user) {
+    var global = app.global;
     $scope.user = {};
     $scope.commit = function() {
       user.login($scope.user).then(function(res){
@@ -32,7 +33,7 @@ app
         $cookieStore.put('accessToken', res.accessToken);
         global.user = res.data;
         $location.path('/');
-      }, console.log)
+      })
     }
   }
 ])
@@ -40,13 +41,19 @@ app
   function($scope, $routeParams, topic) {
     var topicID = $routeParams.id;
     $scope.contentTPL = 'topic.html';
-    $scope.topic = {}
+    $scope.topic = {};
+    $scope.user  = {};
     if(topicID) {
       topic.find(topicID).then(function(res){
         console.log(res);
-        $scope.topic = res.data;
-        $scope.$broadcast('markdown', res.data.content);
-      }, console.log);
+        if(res.code != 'ok') return;
+        var topic, user;
+        topic = res.data.topic;
+        user  = res.data.user;
+        $scope.topic = topic;
+        $scope.user  = user;
+        $scope.$broadcast('markdown', topic.content);
+      });
     }
   }
 ])
@@ -70,12 +77,12 @@ app
         topic.add($scope.topic).then(function(res){
           console.log(res);
           $location.path('/topic/' + res.data._id);
-        }, console.log);
+        });
       } else {
         topic.update($scope.topic).then(function(res){
           console.log(res);
           $location.path('/topic/' + topicID);
-        }, console.log);
+        });
       }
     }
   }

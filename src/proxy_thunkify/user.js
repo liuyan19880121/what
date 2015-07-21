@@ -2,9 +2,31 @@ var models = require('../models');
 var User  = models.User;
 var bcrypt = require('bcrypt');
 
+exports.findById = function(id) {
+    return function(cb) {
+        User.findOne({_id: id}, cb);
+    }
+}
+
 exports.findByLogin = function(login) {
     return function(cb) {
         User.findOne({'$or':[{username: login},{email: login}]}, cb);
+    }
+}
+
+exports.findByNameOrEmail = function(username, email) {
+    return function(cb) {
+        User.findOne({'$or':[{username: username},{email: email}]}, cb);
+    }
+}
+
+exports.add = function(username, email, password) {
+    return function( cb ) {
+        var user = new User();
+        user.username = username;
+        user.email = email;
+        user.password = password;
+        user.save( cb );
     }
 }
 

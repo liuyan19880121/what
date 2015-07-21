@@ -1,17 +1,13 @@
 'use strict';
 
 app
-.factory('global', ['$rootScope', '$location', 'user',
-    function($rootScope, $location, user) {
-        var global = $rootScope.global = {};
-        global.logout = function() {
-            user.logout().then(function(res){
-                if(res.code != 'ok') console.log(res);
-                global.user = null;
-                $location.path('/');
-            }, console.log)
+.factory('notification', ['growl',
+    function(growl) {
+        return {
+            error: function(msg) {
+                growl.addErrorMessage(msg, {ttl: 3000})
+            }
         }
-        return global;
     }
 ])
 .factory('api', ['$resource', 

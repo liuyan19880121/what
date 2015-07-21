@@ -9,6 +9,7 @@ var UserSchema = new Schema({
   email: { type: String },
   imageUrl: {type: String},
   signature: { type: String },
+  isActive: {type: Boolean, default: false},
   create: { type: Date, default: Date.now },
   update: { type: Date, default: Date.now },
   isLock: { type: Boolean, default: false }

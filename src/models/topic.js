@@ -11,6 +11,8 @@ var TopicSchema = new Schema({
   reply:  { type: Date, default: Date.now },
   top: { type: Boolean, default: false },
   deleted: {type: Boolean, default: false},
+  replyCount: { type: Number, default: 0 },
+  visitCount: { type: Number, default: 0 },
 });
 
 TopicSchema.index({top: -1, reply: -1});

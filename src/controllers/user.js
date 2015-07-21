@@ -4,6 +4,32 @@ var hander = require('../common/error_hander');
 var _ = require('lodash');
 var tools = require('../common/tools');
 
+exports.logon = function *(next) {
+    console.log('logon');
+    var username = this.request.body.username;
+    var email    = this.request.body.email;
+    var password = this.request.body.password;
+
+    var user, passhash, result;
+    user = yield User.findByNameOrEmail(username, email);
+
+    if(user) return hander.existsNameOrEmail(this);
+
+    passhash = yield tools.hash(password);
+
+    result = yield User.add(username, email, passhash);
+
+    user = result[0];
+
+    //generate new token
+    yield this.regenerateSession;
+
+    //store user to redis, the key is accessToken(sessionid)
+    this.session.user = user;
+
+    hander.ok(this, user);
+}
+
 exports.login = function *(next) {
     console.log('login');
     //get login information
@@ -29,7 +55,7 @@ exports.login = function *(next) {
     this.session.user = user;
 
     //respond to client
-    hander.ok(this, _.pick(user,['username', 'nickname', 'imageUrl', 'signature']), this.sessionId);
+    hander.ok(this, _.pick(user,['_id', 'username', 'nickname', 'imageUrl', 'signature']), this.sessionId);
 }
 
 exports.logout = function *() {
@@ -42,7 +68,6 @@ exports.logout = function *() {
 
 exports.info = function *(next) {
     console.log('info');
-    var user = this.session.user;
-    if(!user) return hander.noLogin(this);
+    var user = this.session.user || {};
     hander.ok(this, user);
 }

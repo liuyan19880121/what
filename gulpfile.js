@@ -39,7 +39,8 @@ gulp.task('app', function() {
     'src/static/js/controllers.js',
     'src/static/js/directives.js',
     'src/static/js/filters.js',
-    'src/static/js/services.js'
+    'src/static/js/services.js',
+    'src/static/js/growl.js'
     ])
     .pipe(concat('app.js'))
     //.pipe(uglify())
@@ -61,7 +62,8 @@ gulp.task('tpl', function() {
 gulp.task('css', function () {
   return gulp.src([
     'src/static/css/*.css',
-    'build/bower_components/highlightjs/styles/atelier-cave.dark.css'
+    'build/bower_components/highlightjs/styles/atelier-cave.dark.css',
+    'build/bower_components/angular/angular-csp.css'
     ])
     .pipe(concat('app.css'))
     .pipe(gulp.dest(csspath));

@@ -7,11 +7,11 @@ module.run(["$templateCache", function($templateCache) {
     "<div class=\"header\">\n" +
     "    <div class=\"container wrapper\">\n" +
     "        <div class=\"left\"></div>\n" +
-    "        <div class=\"header-actions right\" ng-if=\"!global.user\">\n" +
+    "        <div class=\"header-actions right\" ng-if=\"global.user && !global.user._id\">\n" +
     "            <a class=\"btn btn-primary\" href=\"/logon\">注册</a>\n" +
     "            <a class=\"btn\" href=\"/login\">登录</a>\n" +
     "        </div>\n" +
-    "        <ul class=\"user-nav right\" ng-if=\"global.user\">\n" +
+    "        <ul class=\"user-nav right\" ng-if=\"global.user && global.user._id\">\n" +
     "            <li>\n" +
     "                <a class=\"link\" href=\"/setting\">设置</a>\n" +
     "            </li>\n" +
@@ -180,7 +180,7 @@ module.run(["$templateCache", function($templateCache) {
   "use strict";
   $templateCache.put("topic.html",
     "<div class=\"topic-title-wrapper underline\">\n" +
-    "	<div class=\"topic-edit-action right\">\n" +
+    "	<div class=\"topic-edit-action right\" ng-if=\"global.user._id && global.user._id == user._id\">\n" +
     "		<a href=\"/topic/edit/{{topic._id}}\" class=\"btn btn-sm btn-primary\">编辑</a>\n" +
     "	</div>\n" +
     "	<h1 class=\"topic-title-show\">\n" +

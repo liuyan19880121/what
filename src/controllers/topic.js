@@ -1,5 +1,6 @@
 var proxy = require('../proxy_thunkify');
 var Topic = proxy.Topic;
+var User = proxy.User;
 var _ = require('lodash');
 var hander = require('../common/error_hander')
 
@@ -31,15 +32,32 @@ exports.add = function *(next) {
 
 exports.find = function *(next) {
 	console.log('find');
-	var topicId = this.query._id;
-	var data = {};
+	var topic, topicId, result = {};
+	topicId = this.query._id
+
 	try {
-		data = yield Topic.find(topicId);
+		topic = yield Topic.find(topicId);
 	} catch (e) {
 		return hander.topicNotExists(this);
 	}
-	if(!data) return hander.topicNotExists(this);
-	hander.ok(this, data);
+	if(!topic) return hander.topicNotExists(this);
+
+	//query author
+	var authorId, user;
+	authorId = topic.authorId;
+	if(!authorId) return hander.missingAuthor(this);
+
+	user = yield User.findById(authorId);
+	if(!user) return hander.missingAuthor(this);
+
+	topic.visitCount += 1;
+
+	yield Topic.save(topic);
+
+	result.topic = topic;
+	result.user = _.pick(user,['_id', 'username', 'nickname', 'imageUrl', 'signature']);
+
+	hander.ok(this, result);
 }
 
 
@@ -60,14 +78,14 @@ exports.update = function *(next) {
 	var topic = yield Topic.find(topicId);
 
 	//check owner
-	// if(topic.authorId && !topic.authorId.equals(user._id)) return hander.notTopicOwner(this);
-	if(!topic.authorId.equals(user._id)) return hander.notTopicOwner(this);
+	if(topic.authorId && !topic.authorId.equals(user._id)) return hander.notTopicOwner(this);
+	//if(!topic.authorId.equals(user._id)) return hander.notTopicOwner(this);
 
 	// update
 	topic.title = title;
 	topic.content = content;
 	topic.update = Date.now();
-	//topic.authorId = user._id;
+	topic.authorId = user._id;
 	yield Topic.save(topic);
 
 	//respond to client

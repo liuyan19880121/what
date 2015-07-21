@@ -1,5 +1,5 @@
 <div class="topic-title-wrapper underline">
-	<div class="topic-edit-action right">
+	<div class="topic-edit-action right" ng-if="global.user._id && global.user._id == user._id">
 		<a href="/topic/edit/{{topic._id}}" class="btn btn-sm btn-primary">编辑</a>
 	</div>
 	<h1 class="topic-title-show">
