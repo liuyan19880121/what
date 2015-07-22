@@ -3,13 +3,14 @@ var app = angular.module('App', ['ngRoute', 'ngResource', 'ngCookies', 'ngTempla
 
 app.constant('app', {});
 
-app.run(['app', '$rootScope', '$location', '$cookieStore', '$q', 'user', 'notification',
-    function(app, $rootScope, $location, $cookieStore, $q, user, notification){
+app.run(['app', '$rootScope', '$location', '$cookieStore', '$q', '$timeout', 'user', 'notification',
+    function(app, $rootScope, $location, $cookieStore, $q, $timeout, user, notification){
         var global = $rootScope.global = {};
         //init app
         app.notification = notification;
         app.global = global;
         app.q = $q;
+        app.timeout = $timeout;
 
         var accessToken = $cookieStore.get('accessToken');
         global.user = null;
@@ -103,22 +104,25 @@ app
     }
   }
 ])
-.controller('topicCtrl', ['$scope', '$routeParams', 'topic',
-  function($scope, $routeParams, topic) {
+.controller('topicCtrl', ['app', '$scope', '$routeParams', 'topic',
+  function(app, $scope, $routeParams, topic) {
     var topicID = $routeParams.id;
-    $scope.contentTPL = 'topic.html';
     $scope.topic = {};
     $scope.user  = {};
     if(topicID) {
       topic.find(topicID).then(function(res){
         console.log(res);
         if(res.code != 'ok') return;
+        $scope.contentTPL = 'topic.html';
+
         var topic, user;
         topic = res.data.topic;
         user  = res.data.user;
         $scope.topic = topic;
         $scope.user  = user;
-        $scope.$broadcast('markdown', topic.content);
+        app.timeout(function(){
+          $scope.$broadcast('markdown', topic.content);
+        });
       });
     }
   }
@@ -130,8 +134,9 @@ app
     $scope.topic = {}
     if(topicID) {
       topic.find(topicID).then(function(res){
-        $scope.topic = res.data;
-      }, console.log);
+        if(res.code != 'ok') return;
+        $scope.topic = res.data.topic;
+      });
       isEdit = true;
     }
     $scope.preview = function(editSelect) {
@@ -142,11 +147,13 @@ app
       if(!isEdit) {
         topic.add($scope.topic).then(function(res){
           console.log(res);
+          if(res.code != 'ok') return;
           $location.path('/topic/' + res.data._id);
         });
       } else {
         topic.update($scope.topic).then(function(res){
           console.log(res);
+          if(res.code != 'ok') return;
           $location.path('/topic/' + topicID);
         });
       }
@@ -154,37 +161,41 @@ app
   }
 ])
 'use strict';
-app.directive('markdown', function() {
-	var renderer = new marked.Renderer();
+app.directive('markdown',
+	function($timeout) {
+		var renderer = new marked.Renderer();
 
-	marked.setOptions({
-		renderer: renderer,
-		gfm: true,
-		tables: true,
-		breaks: true,
-		pedantic: false,
-		sanitize: false,
-		smartLists: true,
-		highlight: function(code) {
-			return hljs.highlightAuto(code).value;
-		}
-	});
-	return {
-		scope: true,
-		restrict: 'EA',
-		replace: true,
-		transclude: true,
-		template: '<div ng-bind-html="htmlContent" class="markdown-body"></div>',
-		link: function(scope, element, attr) {
-			var oldContent = "";
-			scope.$on('markdown', function(e, content) {
-				if(oldContent == content) return;
-				scope.htmlContent = marked(content);
-				oldContent = content;
-			})
+		marked.setOptions({
+			renderer: renderer,
+			gfm: true,
+			tables: true,
+			breaks: true,
+			pedantic: false,
+			sanitize: false,
+			smartLists: true,
+			highlight: function(code) {
+				return hljs.highlightAuto(code).value;
+			}
+		});
+		return {
+			scope: true,
+			restrict: 'EA',
+			replace: true,
+			transclude: true,
+			//template: '<div ng-bind-html="htmlContent" class="markdown-body"></div>',
+			template: '<div class="markdown-body"></div>',
+			link: function(scope, element, attr) {
+				// var oldContent = "";
+				// scope.$on('markdown', function(e, content) {
+				// 	if(oldContent == content) return;
+				// 	scope.htmlContent = marked(content);
+				// 	oldContent = content;
+				// })
+				console.log(attr.content)
+			}
 		}
 	}
-})
+)
 'use strict';
 'use strict';
 

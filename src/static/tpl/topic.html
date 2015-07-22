@@ -3,12 +3,12 @@
 		<a href="/topic/edit/{{topic._id}}" class="btn btn-sm btn-primary">编辑</a>
 	</div>
 	<h1 class="topic-title-show">
-		<span>{{topic.title}}</span>
+		<span ng-bind="topic.title"></span>
 	</h1>
 </div>
 <div class="topic-extra_info">
 	<span>发布于 1天前 • 30分钟前更新 • 作者 *** • *** 次浏览 </span>
 </div>
 <div class="topic-content-wrapper">
-	<markdown></markdown>
+	<markdown content="topic.content"></markdown>
 </div>

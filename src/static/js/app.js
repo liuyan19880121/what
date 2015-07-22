@@ -3,13 +3,14 @@ var app = angular.module('App', ['ngRoute', 'ngResource', 'ngCookies', 'ngTempla
 
 app.constant('app', {});
 
-app.run(['app', '$rootScope', '$location', '$cookieStore', '$q', 'user', 'notification',
-    function(app, $rootScope, $location, $cookieStore, $q, user, notification){
+app.run(['app', '$rootScope', '$location', '$cookieStore', '$q', '$timeout', 'user', 'notification',
+    function(app, $rootScope, $location, $cookieStore, $q, $timeout, user, notification){
         var global = $rootScope.global = {};
         //init app
         app.notification = notification;
         app.global = global;
         app.q = $q;
+        app.timeout = $timeout;
 
         var accessToken = $cookieStore.get('accessToken');
         global.user = null;

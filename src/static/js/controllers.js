@@ -37,22 +37,25 @@ app
     }
   }
 ])
-.controller('topicCtrl', ['$scope', '$routeParams', 'topic',
-  function($scope, $routeParams, topic) {
+.controller('topicCtrl', ['app', '$scope', '$routeParams', 'topic',
+  function(app, $scope, $routeParams, topic) {
     var topicID = $routeParams.id;
-    $scope.contentTPL = 'topic.html';
     $scope.topic = {};
     $scope.user  = {};
     if(topicID) {
       topic.find(topicID).then(function(res){
         console.log(res);
         if(res.code != 'ok') return;
+        $scope.contentTPL = 'topic.html';
+
         var topic, user;
         topic = res.data.topic;
         user  = res.data.user;
         $scope.topic = topic;
         $scope.user  = user;
-        $scope.$broadcast('markdown', topic.content);
+        app.timeout(function(){
+          $scope.$broadcast('markdown', topic.content);
+        });
       });
     }
   }
@@ -64,8 +67,9 @@ app
     $scope.topic = {}
     if(topicID) {
       topic.find(topicID).then(function(res){
-        $scope.topic = res.data;
-      }, console.log);
+        if(res.code != 'ok') return;
+        $scope.topic = res.data.topic;
+      });
       isEdit = true;
     }
     $scope.preview = function(editSelect) {
@@ -76,11 +80,13 @@ app
       if(!isEdit) {
         topic.add($scope.topic).then(function(res){
           console.log(res);
+          if(res.code != 'ok') return;
           $location.path('/topic/' + res.data._id);
         });
       } else {
         topic.update($scope.topic).then(function(res){
           console.log(res);
+          if(res.code != 'ok') return;
           $location.path('/topic/' + topicID);
         });
       }

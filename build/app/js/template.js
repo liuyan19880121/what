@@ -184,14 +184,14 @@ module.run(["$templateCache", function($templateCache) {
     "		<a href=\"/topic/edit/{{topic._id}}\" class=\"btn btn-sm btn-primary\">编辑</a>\n" +
     "	</div>\n" +
     "	<h1 class=\"topic-title-show\">\n" +
-    "		<span>{{topic.title}}</span>\n" +
+    "		<span ng-bind=\"topic.title\"></span>\n" +
     "	</h1>\n" +
     "</div>\n" +
     "<div class=\"topic-extra_info\">\n" +
     "	<span>发布于 1天前 • 30分钟前更新 • 作者 *** • *** 次浏览 </span>\n" +
     "</div>\n" +
     "<div class=\"topic-content-wrapper\">\n" +
-    "	<markdown></markdown>\n" +
+    "	<markdown content=\"topic.content\"></markdown>\n" +
     "</div>");
 }]);
 })();
