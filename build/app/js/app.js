@@ -25,7 +25,7 @@ app.run(['app', '$rootScope', '$location', '$cookieStore', '$q', '$timeout', 'us
 
         global.logout = function() {
             user.logout().then(function(res){
-                if(res.code != 'ok') console.log(res);
+                if(res.code != 'ok');
                 global.user = {};
                 $location.path('/');
             })
@@ -35,17 +35,25 @@ app.run(['app', '$rootScope', '$location', '$cookieStore', '$q', '$timeout', 'us
 
 app.config(['app', '$httpProvider', 
     function(app, $httpProvider) {
-        $httpProvider.defaults.transformResponse.push(function (data) {
-            if(angular.isObject(data) && data.code != 'ok') {
-                app.notification.error(data.msg);
-            }
-            return data;
-        });
         $httpProvider.interceptors.push(function () {
             return {
+                response: function(res){
+                    console.log('res', res);
+                    var data = res.data;
+                    if(angular.isObject(data) && data.code != 'ok') {
+                        app.notification.error(data.msg);
+                    }
+                    return res;
+                },
                 responseError: function(rejection) {
                     console.log('rejection', rejection);
-                    app.notification.error('未知错误！');
+                    var msg = '未知错误！';
+                    if(rejection.status == 0){
+                        msg = '无法连接远程服务器';
+                    } else if(angular.isString(rejection.data)){
+                        msg = rejection.data;
+                    }
+                    app.notification.error(msg);
                     return app.q.reject(rejection.data||rejection);
                 }
             }
@@ -120,9 +128,6 @@ app
         user  = res.data.user;
         $scope.topic = topic;
         $scope.user  = user;
-        app.timeout(function(){
-          $scope.$broadcast('markdown', topic.content);
-        });
       });
     }
   }
@@ -141,7 +146,7 @@ app
     }
     $scope.preview = function(editSelect) {
       if(!editSelect) return;
-      $scope.$broadcast('markdown', $scope.topic.content)
+      $scope.$broadcast('markdownContentUpdate');
     }
     $scope.commit = function() {
       if(!isEdit) {
@@ -161,8 +166,8 @@ app
   }
 ])
 'use strict';
-app.directive('markdown',
-	function($timeout) {
+app.directive('markdown', ['$parse',
+	function($parse) {
 		var renderer = new marked.Renderer();
 
 		marked.setOptions({
@@ -182,20 +187,22 @@ app.directive('markdown',
 			restrict: 'EA',
 			replace: true,
 			transclude: true,
-			//template: '<div ng-bind-html="htmlContent" class="markdown-body"></div>',
 			template: '<div class="markdown-body"></div>',
 			link: function(scope, element, attr) {
-				// var oldContent = "";
-				// scope.$on('markdown', function(e, content) {
-				// 	if(oldContent == content) return;
-				// 	scope.htmlContent = marked(content);
-				// 	oldContent = content;
-				// })
-				console.log(attr.content)
+				var content = '';
+				function updateContent() {
+					var value = attr.content && scope.$eval(attr.content);
+					value = value || '';
+					if(content == value) return;
+					element.html(marked(value));
+					content = value;
+				}
+				updateContent();
+				scope.$on('markdownContentUpdate', updateContent)
 			}
 		}
 	}
-)
+])
 'use strict';
 'use strict';
 
@@ -212,7 +219,7 @@ app
 .factory('api', ['$resource', 
   function($resource) {
       return {
-          topic: $resource('/api/topic/:code'),
+          topic: $resource('http://www.angularjs.cn/api/topic/:code'),
           user:  $resource('/api/user/:code')
       }
   }

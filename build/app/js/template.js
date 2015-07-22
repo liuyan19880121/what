@@ -110,7 +110,7 @@ module.run(["$templateCache", function($templateCache) {
   "use strict";
   $templateCache.put("sidebar.html",
     "\n" +
-    "    <p>sidebar</p>\n" +
+    "    <p></p>\n" +
     "");
 }]);
 })();
@@ -139,7 +139,7 @@ module.run(["$templateCache", function($templateCache) {
     "                    <textarea class=\"topic-text-input content-textarea\" placeholder=\"内容\" ng-model=\"topic.content\"></textarea>\n" +
     "                </div>\n" +
     "                <div ng-class=\"['topic-area','content-underline',{hidden:editSelect}]\">\n" +
-    "                    <markdown></markdown>\n" +
+    "                    <markdown content=\"topic.content\"></markdown>\n" +
     "                </div>\n" +
     "                <div class=\"topic-action wrapper\">\n" +
     "                    <button type=\"submit\" class=\"btn btn-primary right\" ng-click=\"commit()\" ng-disabled=\"!topic.title || !topic.content\">提交</button>\n" +

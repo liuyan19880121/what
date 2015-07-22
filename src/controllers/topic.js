@@ -66,7 +66,7 @@ exports.update = function *(next) {
 	//check login
 	var user = this.session.user;
 	if(!user) return hander.noLogin(this);
-
+	
 	//get parameters
 	var title = this.request.body.title;
 	var content = this.request.body.content;

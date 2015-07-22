@@ -62,7 +62,7 @@ exports.logout = function *() {
     console.log('logout');
     //clear session
     this.session = null;
-
+    
     hander.ok(this);
 }
 

@@ -69,4 +69,10 @@ gulp.task('css', function () {
     .pipe(gulp.dest(csspath));
 });
 
-gulp.task('default', sequence('html', 'lib', 'app', 'tpl', 'css'));
+gulp.task('monitor', function () {
+  gulp.watch('src/static/js/*.js', ['app']);
+  gulp.watch('src/static/tpl/*.html', ['tpl']);
+  gulp.watch('src/static/css/*.css', ['css']);
+});
+
+gulp.task('default', sequence('html', 'lib', 'app', 'tpl', 'css', 'monitor'));

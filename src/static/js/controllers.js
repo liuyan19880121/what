@@ -53,9 +53,6 @@ app
         user  = res.data.user;
         $scope.topic = topic;
         $scope.user  = user;
-        app.timeout(function(){
-          $scope.$broadcast('markdown', topic.content);
-        });
       });
     }
   }
@@ -74,7 +71,7 @@ app
     }
     $scope.preview = function(editSelect) {
       if(!editSelect) return;
-      $scope.$broadcast('markdown', $scope.topic.content)
+      $scope.$broadcast('markdownContentUpdate');
     }
     $scope.commit = function() {
       if(!isEdit) {
