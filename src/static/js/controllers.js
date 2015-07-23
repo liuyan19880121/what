@@ -3,6 +3,7 @@ app
 .controller('indexCtrl', ['$scope', '$routeParams', 'topic',
   function($scope, $routeParams, topic) {
     $scope.contentTPL = 'topic-list.html';
+    $scope.sidebarTPL = 'sidebar-index.html';
     topic.list().then(function(res){
       $scope.topicList = res.data;
     }, function(err){

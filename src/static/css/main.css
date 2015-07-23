@@ -1,5 +1,6 @@
 body {
   font: 13px/1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+   /* font-family: "Helvetica Neue","Luxi Sans","DejaVu Sans",Tahoma,"Hiragino Sans GB",STHeiti!important;*/
   color: #333;
   background-color: #fff;
   margin: 0;
@@ -160,4 +161,14 @@ label {
 .link:hover {
   color: #4078c0;
   text-decoration: none;
+}
+
+img {
+    vertical-align: middle;
+    border: 0;
+}
+
+.user-img-40 {
+  height: 40px;
+  width: 40px;
 }

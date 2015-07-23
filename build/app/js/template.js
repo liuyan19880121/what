@@ -33,7 +33,7 @@ module.run(["$templateCache", function($templateCache) {
     "<div ng-include=\"'header.html'\"></div>\n" +
     "<div id=\"main\" class=\"wrapper\">\n" +
     "    <div ng-include=\"contentTPL\" class=\"content-container\"></div>\n" +
-    "    <div ng-include=\"'sidebar.html'\" class=\"sidebar-container\"></div>\n" +
+    "    <div ng-include=\"sidebarTPL\" class=\"sidebar-container\"></div>\n" +
     "</div>\n" +
     "");
 }]);
@@ -108,9 +108,19 @@ try { module = angular.module("ngTemplate"); }
 catch(err) { module = angular.module("ngTemplate", []); }
 module.run(["$templateCache", function($templateCache) {
   "use strict";
-  $templateCache.put("sidebar.html",
+  $templateCache.put("sidebar-index.html",
+    "<div class=\"boxed-group\">\n" +
+    "	<div class=\"boxed-group-action right\">\n" +
+    "     	<a href=\"/topic/new\" class=\"btn btn-sm btn-primary new-repo\">新话题</a>          \n" +
+    "	</div>\n" +
+    "	<h3>用户信息</h3>\n" +
+    "	<div class=\"boxed-group-inner\">\n" +
+    "		<img alt=\"@{{global.user.username}}\" src=\"{{imageUrl}}\" class=\"user-img-40\"></img>\n" +
+    "        <a class=\"link user-name\" href=\"/setting\" ng-bind=\"global.user.username\"></a>\n" +
+    "	</div>\n" +
+    "</div>\n" +
     "\n" +
-    "    <p></p>\n" +
+    "\n" +
     "");
 }]);
 })();

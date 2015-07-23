@@ -2,3 +2,48 @@
     float: right;
     width: 290px;
 }
+
+.sidebar-container .boxed-group {
+  margin-bottom: 20px;
+}
+
+.boxed-group {
+  position: relative;
+  border-radius: 3px;
+  margin-bottom: 30px;
+}
+
+.boxed-group>h3 {
+  background-color: #f5f5f5;
+  margin: 0;
+  border-radius: 3px 3px 0 0;
+  border: 1px solid #d8d8d8;
+  border-bottom: 0;
+  padding: 9px 10px 10px;
+  font-size: 14px;
+  line-height: 17px;
+  display: block;
+}
+
+.boxed-group-action {
+  margin: 6px 10px 0 0;
+  position: relative;
+}
+
+.boxed-group-action .btn-sm {
+	padding: 2px 10px;
+}
+
+.boxed-group-inner {
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #d8d8d8;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  color: #666;
+  font-size: 13px;
+}
+
+.boxed-group-inner>.user-name {
+	margin-left: 10px;
+}

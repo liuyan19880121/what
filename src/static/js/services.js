@@ -13,7 +13,7 @@ app
 .factory('api', ['$resource', 
   function($resource) {
       return {
-          topic: $resource('http://www.angularjs.cn/api/topic/:code'),
+          topic: $resource('/api/topic/:code'),
           user:  $resource('/api/user/:code')
       }
   }

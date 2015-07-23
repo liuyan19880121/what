@@ -78,6 +78,7 @@ app
 .controller('indexCtrl', ['$scope', '$routeParams', 'topic',
   function($scope, $routeParams, topic) {
     $scope.contentTPL = 'topic-list.html';
+    $scope.sidebarTPL = 'sidebar-index.html';
     topic.list().then(function(res){
       $scope.topicList = res.data;
     }, function(err){
@@ -219,7 +220,7 @@ app
 .factory('api', ['$resource', 
   function($resource) {
       return {
-          topic: $resource('http://www.angularjs.cn/api/topic/:code'),
+          topic: $resource('/api/topic/:code'),
           user:  $resource('/api/user/:code')
       }
   }
