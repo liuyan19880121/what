@@ -19,12 +19,12 @@ gulp.task('html', function(){
 
 gulp.task('lib', function() {
   return gulp.src([
-    'build/bower_components/jquery/dist/jquery.min.js',
     'build/bower_components/angular/angular.min.js',
     'build/bower_components/angular-route/angular-route.min.js', 
     'build/bower_components/angular-resource/angular-resource.min.js', 
     'build/bower_components/angular-sanitize/angular-sanitize.min.js',
     'build/bower_components/angular-cookies/angular-cookies.min.js',
+    'build/bower_components/angular-busy/dist/angular-busy.min.js',
     'build/bower_components/marked/marked.min.js',
     'build/bower_components/highlightjs/highlight.pack.js'
     ])
@@ -62,6 +62,7 @@ gulp.task('tpl', function() {
 gulp.task('css', function () {
   return gulp.src([
     'src/static/css/*.css',
+    'build/bower_components/angular-busy/dist/angular-busy.min.css',
     'build/bower_components/highlightjs/styles/atelier-cave.dark.css',
     'build/bower_components/angular/angular-csp.css'
     ])

@@ -1,5 +1,5 @@
 'use strict';
-var app = angular.module('App', ['ngRoute', 'ngResource', 'ngCookies', 'ngTemplate', 'ngSanitize', 'angular-growl']);
+var app = angular.module('App', ['ngRoute', 'ngResource', 'ngCookies', 'ngTemplate', 'ngSanitize', 'angular-growl', 'cgBusy']);
 
 app.constant('app', {});
 
@@ -14,7 +14,7 @@ app.run(['app', '$rootScope', '$location', '$cookieStore', '$q', '$timeout', 'us
 
         var accessToken = $cookieStore.get('accessToken');
         global.user = null;
-        user.info(accessToken).then(function(res){
+        global.sidebarPromise = user.info(accessToken).then(function(res){
             console.log(res);
             if(!res.data._id) {
                 global.user = {};

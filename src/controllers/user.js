@@ -69,5 +69,13 @@ exports.logout = function *() {
 exports.info = function *(next) {
     console.log('info');
     var user = this.session.user || {};
+    yield test_sleep(3000)
+    console.log(user);
     hander.ok(this, user);
+}
+
+var test_sleep = function(time) {
+    return function(cb) {
+        setTimeout(cb, time);
+    }
 }

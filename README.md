@@ -24,7 +24,7 @@ ssh-agent -s
 
 set SSH_AUTH_SOCK=/tmp/ssh-PQdjU56820/agent.56820
 
-ssh-add ../.ssh/what
+ssh-add ../.ssh/what.key
 
 ssh -T git@github.com
 ```

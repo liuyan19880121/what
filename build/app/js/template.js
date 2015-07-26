@@ -32,10 +32,20 @@ module.run(["$templateCache", function($templateCache) {
   $templateCache.put("index.html",
     "<div ng-include=\"'header.html'\"></div>\n" +
     "<div id=\"main\" class=\"wrapper\">\n" +
-    "    <div ng-include=\"contentTPL\" class=\"content-container\"></div>\n" +
-    "    <div ng-include=\"sidebarTPL\" class=\"sidebar-container\"></div>\n" +
+    "	<div class=\"content-container\" ng-include=\"contentTPL\"></div>\n" +
+    "	<div class=\"sidebar-container\" ng-include=\"sidebarTPL\"></div>\n" +
     "</div>\n" +
     "");
+}]);
+})();
+
+(function(module) {
+try { module = angular.module("ngTemplate"); }
+catch(err) { module = angular.module("ngTemplate", []); }
+module.run(["$templateCache", function($templateCache) {
+  "use strict";
+  $templateCache.put("loading.html",
+    "<div cg-busy=\"loadPromise\"></div>");
 }]);
 })();
 

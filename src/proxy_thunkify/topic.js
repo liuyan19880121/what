@@ -4,13 +4,15 @@ var Topic  = models.Topic;
 
 exports.list = function(query, options) {
 	return function(cb) {
-		Topic.find(query, null, options, cb)
+		setTimeout( function(){
+		Topic.find(query, null, options, cb)}, 2000);
 	}
 }
 
 exports.find = function(topicId) {
 	return function(cb) {
-		Topic.findOne({_id: topicId}, cb)
+		setTimeout( function(){
+		Topic.findOne({_id: topicId}, cb)}, 2000);
 	}
 }
 

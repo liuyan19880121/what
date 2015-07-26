@@ -172,3 +172,10 @@ img {
   height: 40px;
   width: 40px;
 }
+
+#main .cg-busy-default-sign {
+  border: 0; 
+  box-shadow: 0 0 0;
+  -webkit-box-shadow: 0 0 0;
+  background-color: inherit;
+}

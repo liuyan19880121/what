@@ -4,10 +4,8 @@ app
   function($scope, $routeParams, topic) {
     $scope.contentTPL = 'topic-list.html';
     $scope.sidebarTPL = 'sidebar-index.html';
-    topic.list().then(function(res){
+    $scope.contentPromise = topic.list().then(function(res){
       $scope.topicList = res.data;
-    }, function(err){
-      console.log(err);
     })
   }
 ])
@@ -43,8 +41,9 @@ app
     var topicID = $routeParams.id;
     $scope.topic = {};
     $scope.user  = {};
+    $scope.contentTPL = 'loading.html';
     if(topicID) {
-      topic.find(topicID).then(function(res){
+      $scope.loadPromise = topic.find(topicID).then(function(res){
         console.log(res);
         if(res.code != 'ok') return;
         $scope.contentTPL = 'topic.html';
